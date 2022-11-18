@@ -1,0 +1,40 @@
+.input {
+  .input__title {
+    font-size: 1em;
+    font-weight: 400;
+    color: #fff;
+    opacity: 0.3;
+    margin-bottom: 0.3em;
+  }
+
+  .input__element {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1em;
+    width: 100%;
+    height: 2.5em;
+    border-radius: 0.5em;
+    background-color: #2b2a2f;
+    padding: 0 1em;
+    font-size: 1em;
+    font-weight: 400;
+    color: #fff;
+    border: none;
+    transition: all 0.2s ease-in-out;
+
+    &:focus, &:focus-visible {
+      opacity: 1;
+      border: solid 1px rgba(255, 255, 255, 0.2);
+      outline: none;
+    }
+  }
+    
+  select.input__element {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+  }
+}

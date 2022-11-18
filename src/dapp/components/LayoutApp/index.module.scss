@@ -1,0 +1,32 @@
+.layoutApp {
+  display: flex;
+  width: 100%;
+
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    // justify-content: center;
+    position: relative;
+
+    .contentContainer {
+      width: 80%;
+      padding: 2em 0;
+
+      .navBar {
+        margin-bottom: 1em;
+      }
+    }
+  }
+
+  .sideBar {
+    width: 30vw;
+    min-height: 100vh;
+    background-color: #13120f;
+
+    .wrapper {
+      padding: 50px 60px;
+    }
+  }
+}

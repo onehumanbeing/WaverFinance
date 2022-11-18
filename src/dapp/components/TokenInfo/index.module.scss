@@ -1,0 +1,23 @@
+.tokenInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+
+  .tokenInfo__info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+
+
+    .tokenInfo__info__name {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .tokenInfo__info__address {
+      opacity: 0.5;
+      font-size: 12px;
+    }
+  }
+}

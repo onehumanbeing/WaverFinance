@@ -1,0 +1,154 @@
+.myAssetsPage__container {
+  $card-gap: 1.5em;
+
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  gap: $card-gap;
+
+  .contractInfo {
+    width: 100%;
+    height: 400px;
+    position: relative;
+    display: flex;
+    gap: $card-gap;
+
+    > * {
+      height: 100%;
+    }
+
+    .leftPart {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      gap: $card-gap;
+
+      .balanceCard {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 1.5em;
+
+        .part {
+          display: flex;
+          align-items: center;
+          color: white;
+          gap: 0.8em;
+
+          .iconBox {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 3.5em;
+            height: 3.5em;
+            border-radius: 0.6em;
+            background-color: rgba(255, 255, 255, 0.2);
+
+            .iconBox__icon {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 1.5em;
+            }
+          }
+          
+          .info {
+            flex: 1;
+
+            .title {
+              font-size: 12px;
+              font-weight: 400;
+            }
+
+            .value {
+              font-size: 20px;
+              font-weight: 700;
+            }
+          }
+
+          .extra {
+            display: flex;
+            justify-content: flex-end;
+            font-size: 12px;
+          }
+
+          &.depositAmountPart {
+            .icon {
+              width: 1em;
+              height: 1em;
+            }
+
+            .withdrawBtn {
+              margin-top: 0.2em;
+              font-size: 12px;
+            }
+          }
+        }
+      }
+
+      .contractInfoCard {
+        position: relative;
+
+        .contractInfoCard__address {
+          margin-top: 0.5em;
+          opacity: 0.5;
+          font-size: 12px;
+        }
+
+        .version {
+          margin-top: 1em;
+          opacity: 0.2;
+          width: 100%;
+          font-size: 12px;
+          display: flex;
+          justify-content: flex-end;
+          position: relative;
+          top: 12px;
+          right: -12px;
+        }
+      }
+    }
+
+    .rightPart {
+      flex: 5;
+      display: flex;
+      flex-direction: column;
+      gap: $card-gap;
+
+      .panelInfo {
+        padding-left: 2%;
+        padding-right: 5%;
+      }
+
+      .tokensCard {
+        flex: 1;
+
+        .tokensTable {
+          width: 100%;
+
+          .amount {
+            .amountBalance {
+              font-size: 14px;
+              font-weight: 700;
+            }
+            .amountUsd {
+              opacity: 0.5;
+              font-size: 12px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .recentActivityCard {
+    .activityTable {
+      width: 100%;
+
+      .activityTable__action {
+        font-weight: 700;
+      }
+    }
+  }
+}

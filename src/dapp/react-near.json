@@ -1,0 +1,12 @@
+{
+  "dist": "near-api",
+  "type": "default",
+  "contracts": [
+    {
+      "name": "QuanTradeMainContract",
+      "abi": "abi/quanMainContract_abi.json",
+      "mainnet": "mfight-nft.near",
+      "testnet": "dev-1666421007416-91208904168266"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+.appTopNavBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .appTopNavBar__logo {
+    $size: 80px;
+
+    width: $size;
+    height: $size;
+
+    .appTopNavBar__logo__img {
+      width: $size;
+      height: $size;
+    }
+  }
+
+  .appTopNavBar__navList {
+    list-style: none;
+    display: flex;
+    gap: 3em;
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.4s all;
+      position: relative;
+      padding: 0 0.5em;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.5;
+      }
+
+      &.active {
+
+        &::before {
+          content: '';
+          position: absolute;
+          width: 8px;
+          height: 8px;
+          background-color: #0d76ff;
+          border-radius: 50%;
+          bottom: -12px;
+        }
+
+        .title {
+          font-weight: 700;
+          opacity: 1;
+        }
+      }
+
+      .title {
+        font-size: 1.2em;
+        color: #fff;
+        opacity: 0.8;
+      }
+    }
+  }
+}

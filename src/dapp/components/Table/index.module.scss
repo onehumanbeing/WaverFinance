@@ -1,0 +1,15 @@
+.table {
+  .table__header {
+    text-align: left;
+    height: 4em;
+    opacity: 0.5;
+
+    .table__header__item {
+      font-weight: 400;
+    }
+  }
+
+  .table__body__item {
+    height: 3em;
+  }
+}

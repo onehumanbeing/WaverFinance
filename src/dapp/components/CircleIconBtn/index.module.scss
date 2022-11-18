@@ -1,0 +1,20 @@
+.circleIconBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 2em;
+  height: 2em;
+  background-color: #fff;
+  cursor: pointer;
+  transform: scale(1);
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+
+  &:active {
+    transform: scale(0.5);
+  }
+}

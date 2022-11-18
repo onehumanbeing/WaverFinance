@@ -1,0 +1,123 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &[disabled] {
+    cursor: not-allowed;
+  }
+
+  .loading {
+    .loader {
+      width: var(--button-loading-size, 48px);
+      height: var(--button-loading-size, 48px);
+      border: 5px solid;
+      border-color: var(--button-loading-color, #fff);
+      border-bottom-color: transparent;
+      border-radius: 50%;
+      display: inline-block;
+      box-sizing: border-box;
+      animation: rotation 1s linear infinite;
+    }
+  }
+}
+
+@keyframes rotation {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+}
+
+@mixin scaleHover {
+  transition: 0.3s all;
+  transform: scale(1);
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+}
+
+.button__type-primary {
+  height: 4em;
+  padding: 0 3em;
+  min-width: 10em;
+  border-radius: 1em;
+  border: none;
+
+  @include scaleHover;
+
+  &.button__size-middle {
+    height: 3em;
+  }
+}
+
+.button__type-minimal {
+  height: 1.6em;
+  padding: 0 1.5em;
+  min-width: 5em;
+  border-radius: 1em;
+  border: none;
+
+  @include scaleHover;
+}
+
+.button__schema-default {
+  $color: #fff;
+  --button-loading-color: $color;
+  color: $color;
+  background: #1e33ee;
+
+  &.button__type-pure {
+    $color: #5755f3;
+    --button-loading-color: $color;
+    color: $color;
+    background: transparent;
+    border: none;
+  }
+}
+
+.button__schema-danger {
+  $color: #fff;
+  --button-loading-color: $color;
+  color: $color;
+  background: #dd372d;
+
+  &.button__type-pure {
+    $color: #ff5f56;
+    --button-loading-color: $color;
+    color: $color;
+    background: transparent;
+    border: none;
+  }
+}
+
+.button__schema-white {
+  $color: #040d68;
+  --button-loading-color: $color;
+  color: $color;
+  background: #fff;
+
+  &.button__type-pure {
+    $color: #fff;
+    --button-loading-color: $color;
+    color: $color;
+    background: transparent;
+    border: none;
+  }
+}
+
+.button__schema-transparent {
+  $color: #fff;
+  --button-loading-color: $color;
+  color: $color;
+  background: transparent;
+}
+
