@@ -1,0 +1,12 @@
+{
+    "data": {
+        "stype": 3,
+        "target_ft": "wrap.testnet",
+        "invest_ft": "usdt.fakes.testnet",
+        "grid_intervel": 30000,
+        "grid_size": "100000000000000000000000000",
+        "highest_price": 800000,
+        "lowest_price": 612000,
+        "time_period": 604800
+    }
+}

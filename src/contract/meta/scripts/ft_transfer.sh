@@ -1,0 +1,2 @@
+near call ft.waver.testnet storage_deposit '{"account_id": "winrey.testnet", "registration_only": true}' --accountId ft.waver.testnet --deposit 0.00125
+near call ft.waver.testnet ft_transfer '{"receiver_id": "winrey.testnet", "amount": "3000000000000000000000000"}' --accountId ft.waver.testnet --amount 0.000000000000000000000001

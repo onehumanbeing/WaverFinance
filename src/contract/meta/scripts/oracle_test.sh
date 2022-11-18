@@ -1,0 +1,1 @@
+near call $CONTRACT request "$(<oracle.json)" --accountId test.dev-1666421007416-91208904168266 --keyPath test_key.json --gas 300000000000000 

@@ -1,0 +1,8 @@
+{
+    "related_contract": "wrap.testnet",
+    "receiver_id": "ref-finance-101.testnet",
+    "amount": "1000000000000000000000000",
+    "msg": "{\"force\":0,\"actions\":[{\"pool_id\":424,\"token_in\":\"wrap.testnet\",\"token_out\":\"usdn.testnet\",\"amount_in\":\"1000000000000000000000000\",\"min_amount_out\":\"0\"},{\"pool_id\":356,\"token_in\":\"usdn.testnet\",\"token_out\":\"usdt.fakes.testnet\",\"min_amount_out\":\"342202267264\"}]}",
+    "strategy_id": "1",
+    "signer_id": "waver.testnet"
+}

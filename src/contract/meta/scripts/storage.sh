@@ -1,0 +1,2 @@
+near call $CONTRACT storage '{"ft_contract": "usdt.fakes.testnet"}' --accountId test.ft.waver.testnet --keyPath test_key.json --gas 300000000000000 
+near call $CONTRACT storage '{"ft_contract": "wrap.testnet"}' --accountId test.ft.waver.testnet --keyPath test_key.json --gas 300000000000000 

@@ -1,0 +1,2 @@
+near call $CONTRACT storage_deposit '{"account_id": "waver.testnet", "registration_only": true}' --accountId $CONTRACT --deposit 0.00125
+near call $CONTRACT create_contract '{"contract_id": "test"}' --accountId=waver.testnet --deposit 2.5 --gas 300000000000000

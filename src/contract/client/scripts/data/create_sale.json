@@ -1,0 +1,10 @@
+{
+    "data": {
+        "stype": 2,
+        "target_ft": "wrap.testnet",
+        "invest_ft": "usdt.fakes.testnet",
+        "amount": "100000000000000000000000",
+        "expression": 1,
+        "target_price": 300000
+    }
+}
