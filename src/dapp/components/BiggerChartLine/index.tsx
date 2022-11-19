@@ -11,8 +11,6 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 
-import Card from "../../components/Card";
-
 import styles from "./index.module.scss";
 
 ChartJS.register(
@@ -33,6 +31,7 @@ const BiggerChartLine: React.FC<{
   className?: string;
   data: IBiggerChartData[];
 }> = ({ className, data }) => {
+  
   return (
     <div className={`${className} ${styles.biggerChartLine__container}`}>
       <Line
@@ -42,8 +41,8 @@ const BiggerChartLine: React.FC<{
             {
               data: data.map((item) => item.value),
               borderWidth: 2.5,
-              borderColor: '#e50e0c',
-              backgroundColor: '#e50e0c',
+              borderColor: '#0c2995',
+              backgroundColor: '#0c2995',
               // cubicInterpolationMode: 'monotone',
               tension: 0.4,
               pointStyle: 'circle',
