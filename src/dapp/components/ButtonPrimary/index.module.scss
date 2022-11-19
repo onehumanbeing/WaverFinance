@@ -1,0 +1,23 @@
+.primaryBtn {
+  background: rgb(78,65,255);
+  background: linear-gradient(46deg, rgb(25, 12, 215) 0%, rgb(52, 136, 239) 100%);
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 35px;
+  outline: none;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s all;
+
+  &:hover {
+    transform: scale(1.04);
+    box-shadow: 0px 0px 15px rgb(12, 13, 97);
+  }
+
+  &:active {
+    transform: scale(0.8);
+    box-shadow: 0px 0px 15px rgb(12, 13, 97);
+  }
+}

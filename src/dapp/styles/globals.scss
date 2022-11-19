@@ -1,0 +1,105 @@
+@import "consts.scss";
+
+html, body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+a {
+  color: $a-default-color;
+  text-decoration: none;
+  transition: 0.5s all;
+}
+
+a:hover {
+  color: $a-default-hover-color;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* @media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: white;
+    background: black;
+  }
+} */
+
+
+html{
+  background-color: $landing-page-background-color;
+}
+
+body{
+  font-family: 'Gilroy', sans-serif;
+  overflow-x: hidden;
+  color: white;
+}
+
+
+
+/**************************************************************************************
+
+                                        FONT FAMILY
+
+**************************************************************************************/
+  
+
+@font-face {
+  font-family: "Gilroy"; 
+  font-style: normal; 
+  font-weight: 500;
+  src: url("../assets/fonts/Gilroy-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Gilroy"; 
+  font-style: normal; 
+  font-weight: 600;
+  src: url("../assets/fonts/Gilroy-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Gilroy"; 
+  font-style: bold; 
+  font-weight: 700;
+  src: url("../assets/fonts/Gilroy-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Gilroy"; 
+  font-style: black; 
+  font-weight: 800;
+  src: url("../assets/fonts/Gilroy-ExtraBold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Gilroy"; 
+  font-style: black; 
+  font-weight: 900;
+  src: url("../assets/fonts/Gilroy-Black.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Gilroy"; 
+  font-style: thin; 
+  font-weight:300;
+  src: url("../assets/fonts/Gilroy-Thin.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Gilroy"; 
+  font-style: light; 
+  font-weight:100;
+  src: url("../assets/fonts/Gilroy-Light.ttf") format("truetype");
+}

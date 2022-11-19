@@ -1,0 +1,90 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+
+  &.modal__active {
+    display: flex;
+    opacity: 1;
+  }
+
+  .modal__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+
+  .modal__content {
+    $scroll-width: 20px;
+
+    position: relative;
+    z-index: 2;
+    background-color: #131217;
+    border-radius: 10px;
+    padding: 3em 4em;
+    max-height: 90vh;
+    overflow-y: auto;
+
+    .modal__closeBtn {
+      position: absolute;
+      top: 2em;
+      right: 3em;
+    }
+
+    .modal__content__action {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    &::-webkit-scrollbar {
+      // display: none;
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+
+      background: rgba(255, 255, 255, 0.1);
+      transition: all 2s ease-in-out;
+      border-radius: $scroll-width / 2;
+      width: $scroll-width;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+    }
+
+    // &::-webkit-scrollbar-track {
+    //   display: none;
+    //   background: transparent;
+    // }
+
+    // &::-webkit-scrollbar-track-piece {
+    //   display: none;
+    //   background: transparent;
+    // }
+  }
+
+  &.mode__greedy {
+    .modal__content {
+      width: calc(100% - 100px);
+      max-width: 1000px;
+    }
+  }
+}

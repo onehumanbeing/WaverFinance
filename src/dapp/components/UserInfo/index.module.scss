@@ -1,0 +1,72 @@
+.userCard {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  gap: 1em;
+
+  .userCard__info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+
+    .userCard__info__name {
+      font-size: 1.5em;
+      font-weight: 700;
+    }
+
+    .userCard__info__address {
+      font-size: 1em;
+      font-weight: 400;
+      opacity: 0.6;
+
+      &.addressOnly {
+        font-size: 1.5em;
+        font-weight: 600;
+        opacity: 1;
+      }
+    }
+  }
+
+  .userCard__avatar {
+    width: 4em;
+    height: 4em;
+    border: rgba(255, 255, 255, 0.3) solid 1px;
+    overflow: hidden;
+    border-radius: 50%;
+    position: relative;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .logoutInAvatar {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: 0.4s all;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 1;
+      }
+
+      .icon {
+        $size: 1.8em;
+
+        width: $size;
+        height: $size;
+        fill: white;
+      }
+    }
+  }
+}

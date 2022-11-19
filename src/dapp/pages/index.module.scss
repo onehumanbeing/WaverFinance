@@ -1,0 +1,98 @@
+.bgImg {
+  width: 100%;
+  max-width: 1200px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  animation: wave 35s infinite;
+  z-index: -1;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 35vh;
+  
+  h1 {
+    font-size: 3em;
+    max-width: 80%;
+    margin-top: 15px;
+    margin-bottom: 0;
+
+    span {
+      color: #5b76ff;
+    }
+  }
+
+  p {
+    font-size: 1.1em;
+    font-weight: 400;
+  }
+
+  button {
+    max-width: 150px;
+    margin-top: 30px;
+  }
+}
+
+.footer {
+  margin-top: 20vh;
+  width: 100%;
+}
+
+@keyframes wave {
+  0% {
+    transform: skew(0deg, 0deg);
+  }
+  30% {
+    transform: skew(0deg, 2deg);
+  }
+  55% {
+    transform: skew(0deg, -1deg);
+  }
+  80% {
+    transform: skew(0deg, 3deg);
+  }
+  100% {
+    transform: skew(0deg, 0deg);
+  }
+}
+
+@media (max-width: 1100px) {
+  .container {
+    max-width: 90% !important;
+    width: 90% !important;
+  }
+  .content h1 {
+    font-size: 2.5em;
+  }
+}
+
+@media (max-width: 760px) {
+  .bgBox {
+    z-index: -1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(30deg);
+    width: 700px;
+  }
+  .ulWrapper {
+    display: none !important;
+  }
+  #sideBarBox {
+    display: block;
+  }
+  .content h1 {
+    font-size: 1.8em;
+    max-width: 100%;
+  }
+  .content p {
+    font-size: 0.9em;
+  }
+}

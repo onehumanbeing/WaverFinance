@@ -1,0 +1,24 @@
+.panelInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .panelInfo__element {
+    // flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6em;
+
+    .panelInfo__element__title {
+      font-size: 0.8em;
+      font-weight: 400;
+      opacity: 0.6;
+    }
+
+    .panelInfo__element__content {
+      font-size: 1.2em;
+      font-weight: 700;
+    }
+  }
+}

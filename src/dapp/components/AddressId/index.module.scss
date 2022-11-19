@@ -1,0 +1,11 @@
+.addressId {
+  display: flex;
+  align-items: center;
+
+  .copyBtn {
+    margin-left: 0.5em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+}

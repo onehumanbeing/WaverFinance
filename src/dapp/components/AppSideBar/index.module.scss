@@ -1,0 +1,35 @@
+.appSideBar {
+  .appSideBar__topBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .appSideBar__title {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #fff;
+    margin-top: 2em;
+    margin-bottom: 1.5em;
+    padding-left: 2%;
+  }
+
+  .appSideBar__content {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    width: 100%;
+
+    .analysisReport__panel {
+      padding-left: 2%;
+      padding-right: 5%;
+    }
+  }
+
+  .chartGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    margin-top: 2em;
+  }
+}

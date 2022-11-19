@@ -1,0 +1,95 @@
+.content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  max-width: 600px;
+
+  @media (max-width: 800px) {
+    transform: translate(-50%, -50%) scale(0.8) !important;
+    max-width: 90% !important;
+    width: 90% !important;
+  }
+
+  .logo {
+    width: 100px;
+    margin-left: -10px;
+  }
+
+  .bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    min-width: 1000px;
+    z-index: -1;
+    animation: skew 35s infinite;
+  }
+
+  h1 {
+    font-size: 2.5em;
+  }
+
+  .bottomSection {
+    display: flex;
+    width: 100%;
+    margin-top: 3em;
+    justify-content: space-between;
+    align-items: center;
+
+    p{
+      font-size: 0.8em;
+      position: relative;
+
+      &::before {
+        position: absolute;
+        width: 60px;
+        height: 1px;
+        background: white;
+        right: -80px;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        content: "";
+      }
+    }
+    
+    button {
+      width: 150px;
+    }
+
+    @media (max-width: 500px) {
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+    
+      button {
+        margin-top: 1.5em;
+        align-self: flex-end;
+      }
+    }
+  }
+}
+
+@keyframes skew {
+  0% {
+    transform: translate(-50%, -50%) skew(0deg, 0deg);
+  }
+  30% {
+    transform: translate(-50%, -50%) skew(-25deg, 5deg);
+  }
+  55% {
+    transform: translate(-50%, -50%) skew(10deg, 10deg);
+  }
+  80% {
+    transform: translate(-50%, -50%) skew(20deg, -10deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) skew(0deg, 0deg);
+  }
+}
