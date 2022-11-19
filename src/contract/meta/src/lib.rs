@@ -8,7 +8,6 @@ use near_sdk::json_types::{Base64VecU8, U128};
 use near_sdk::serde::{Deserialize, Serialize};
 use near_sdk::{env, near_bindgen, AccountId, PanicOnDefault, Promise, PublicKey,
     PromiseOrValue, assert_self, is_promise_success, ext_contract};
-use near_units::parse_near;
 pub use crate::constants::*;
 pub use crate::models::*;
 mod constants;
@@ -90,7 +89,7 @@ pub trait ExtSelf {
     ) -> Promise;
     fn on_oracle_request(
         &mut self,
-        account_id: AccountId,
+        _account_id: AccountId,
         signer_id: AccountId
     ) -> Promise;
 }
@@ -316,13 +315,13 @@ impl Contract {
 
     pub fn on_oracle_request(
         &mut self,
-        account_id: AccountId,
+        _account_id: AccountId,
         signer_id: AccountId
     ) -> PromiseOrValue<bool> {
         assert_self();
         let is_success = is_promise_success();
         if is_success {
-            let new_token_balance = self.burn_token(&signer_id);
+            let _new_token_balance = self.burn_token(&signer_id);
             PromiseOrValue::Value(true)
         } else {
             PromiseOrValue::Value(false)

@@ -121,7 +121,7 @@ impl Contract {
     pub fn oracle_request(&mut self, related_contract: AccountId, receiver_id: AccountId, amount: U128, msg: String, strategy_id: String, price: u64) -> PromiseOrValue<bool>  {
         self.assert_oracle();
         // verify request
-        let request_data = serde_json::from_str::<OracleActionRequest>(&msg).expect("Illegal msg in oracle_request");
+        let _request_data = serde_json::from_str::<OracleActionRequest>(&msg).expect("Illegal msg in oracle_request");
         // request validate, finish request now.
         // TODO: verify related_contract in mainnet
         // check oracle logic
