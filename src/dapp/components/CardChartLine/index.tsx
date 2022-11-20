@@ -66,6 +66,7 @@ const CardChartLine: React.FC<{
             interaction: {
               intersect: false,
             },
+            
           }}
         />
       </div>

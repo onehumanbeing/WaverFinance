@@ -15,7 +15,7 @@
     "echarts": "^5.4.0",
     "echarts-for-react": "^3.0.2",
     "near-api-js": "^0.43.1",
-    "next": "12.3.1",
+    "next": "^12.3.2",
     "next-redux-wrapper": "^8.0.0",
     "react": "18.2.0",
     "react-chartjs-2": "^4.3.1",
