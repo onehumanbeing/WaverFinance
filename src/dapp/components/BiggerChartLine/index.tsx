@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
-import ReactECharts from 'echarts-for-react';
+import ReactECharts from "echarts-for-react";
 
 import styles from "./index.module.scss";
-import waverApi, { TWaverHistory, TWaverActivity } from "../../services/rest/waver";
+import waverApi, {
+  TWaverHistory,
+  TWaverActivity,
+} from "../../services/rest/waver";
 import { useClientContractId } from "../../services/near/quan-client";
 
 const getOptions = (history: TWaverHistory[], activities: TWaverActivity[]) => {
   return {
     tooltip: {
-      trigger: 'axis'
+      trigger: "axis",
     },
     // legend: {},
     // toolbox: {
@@ -22,15 +25,15 @@ const getOptions = (history: TWaverHistory[], activities: TWaverActivity[]) => {
     //   }
     // },
     xAxis: {
-      type: 'time',
+      type: "time",
     },
     yAxis: {
-      type: 'value',
+      type: "value",
       axisLabel: {
-        formatter: '${value}'
+        formatter: "${value}",
       },
       scale: true,
-      splitLine:{show: false},
+      splitLine: { show: false },
     },
     // dataZoom: [
     //   {
@@ -40,9 +43,29 @@ const getOptions = (history: TWaverHistory[], activities: TWaverActivity[]) => {
     // ],
     series: [
       {
-        name: 'Price',
-        type: 'line',
+        name: "Price",
+        type: "line",
         smooth: true,
+        itemStyle: {
+          color: {
+            type: "linear",
+            x: 0,
+            y: 0,
+            x2: 1,
+            y2: 0,
+            colorStops: [
+              {
+                offset: 0,
+                color: "#888dc9", // 0% 处的颜色
+              },
+              {
+                offset: 1,
+                color: "#546ecd", // 100% 处的颜色
+              },
+            ],
+            globalCoord: false,
+          },
+        },
         data: history.map((item) => [new Date(item.updated), item.price]),
         markPoint: {
           symbolSize: 60,
@@ -53,93 +76,90 @@ const getOptions = (history: TWaverHistory[], activities: TWaverActivity[]) => {
               xAxis: new Date(item.updated),
               yAxis: item.price,
               itemStyle: {
-                color: isSale ? '#c05858' : '#58c059'
+                color: isSale ? "#c05858" : "#58c059",
               },
               // label: {
               //   formatter: name,
               //   position: 'top'
               // },
-            }
-          })
+            };
+          }),
         },
         markLine: {
-          data: [{ type: 'average', name: 'Avg' }]
+          data: [{ type: "average", name: "Avg" }],
         },
         lineStyle: {
           width: 4,
         },
       },
-    ]
+    ],
   };
-}
+};
 
 const getDemoOptions = () => {
   const history: any[] = [
     {
-      "updated": "2021-08-01T00:00:00.000Z",
-      "price": 3.2,
+      updated: "2021-08-01T00:00:00.000Z",
+      price: 3.2,
     },
     {
-      "updated": "2021-08-02T00:00:00.000Z",
-      "price": 2.1,
+      updated: "2021-08-02T00:00:00.000Z",
+      price: 2.1,
     },
     {
-      "updated": "2021-08-03T00:00:00.000Z",
-      "price": 1.6,
+      updated: "2021-08-03T00:00:00.000Z",
+      price: 1.6,
     },
     {
-      "updated": "2021-08-04T00:00:00.000Z",
-      "price": 3.6,
+      updated: "2021-08-04T00:00:00.000Z",
+      price: 3.6,
     },
     {
-      "updated": "2021-08-05T00:00:00.000Z",
-      "price": 5,
+      updated: "2021-08-05T00:00:00.000Z",
+      price: 5,
     },
     {
-      "updated": "2021-08-06T00:00:00.000Z",
-      "price": 2.3,
+      updated: "2021-08-06T00:00:00.000Z",
+      price: 2.3,
     },
     {
-      "updated": "2021-08-07T00:00:00.000Z",
-      "price": 3.5,
+      updated: "2021-08-07T00:00:00.000Z",
+      price: 3.5,
     },
     {
-      "updated": "2021-08-08T00:00:00.000Z",
-      "price": 2.1,
+      updated: "2021-08-08T00:00:00.000Z",
+      price: 2.1,
     },
     {
-      "updated": "2021-08-09T00:00:00.000Z",
-      "price": 2.2,
+      updated: "2021-08-09T00:00:00.000Z",
+      price: 2.2,
     },
-  ]
+  ];
   const activities: any = [
     {
-      "updated": "2021-08-03T00:00:00.000Z",
-      "price": 1.6,
+      updated: "2021-08-03T00:00:00.000Z",
+      price: 1.6,
     },
     {
-      "updated": "2021-08-05T00:00:00.000Z",
-      "price": 5,
-      "amount_in_contract": "wrap.testnet",
+      updated: "2021-08-05T00:00:00.000Z",
+      price: 5,
+      amount_in_contract: "wrap.testnet",
     },
     {
-      "updated": "2021-08-08T00:00:00.000Z",
-      "price": 2.1,
+      updated: "2021-08-08T00:00:00.000Z",
+      price: 2.1,
     },
-  ]
-  
-  return getOptions(history, activities)
-}
+  ];
 
-
+  return getOptions(history, activities);
+};
 
 const BiggerChartLine: React.FC<{
   className?: string;
   tokenId?: string;
   demo?: boolean;
 }> = ({ className, tokenId, demo }) => {
-
-  const { contractId } = useClientContractId()
+  const { contractId } = useClientContractId();
   const [options, setOptions] = useState<any>();
 
   // useEffect(() => {
@@ -160,16 +180,18 @@ const BiggerChartLine: React.FC<{
       return;
     }
     setOptions(getDemoOptions);
-  }, [demo])
-  
+  }, [demo]);
+
   return (
     <div className={`${className} ${styles.biggerChartLine__container}`}>
-      {options && <ReactECharts 
-        style={{
-          height: '400px',
-        }}
-        option={options}
-      />}
+      {options && (
+        <ReactECharts
+          style={{
+            height: "400px",
+          }}
+          option={options}
+        />
+      )}
     </div>
   );
 };

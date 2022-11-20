@@ -2,7 +2,7 @@ import React from "react";
 import Image from 'next/image';
 
 import styles from "./index.module.scss";
-import Logo from "../../assets/img/logo/logo.png";
+import Logo from "../../assets/img/logo/Logo.png";
 
 
 const TokenState: React.FC = () => {
