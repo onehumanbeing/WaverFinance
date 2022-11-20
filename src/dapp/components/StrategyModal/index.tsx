@@ -1,5 +1,5 @@
 import { formatNearAmount, parseNearAmount } from "near-api-js/lib/utils/format";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNearUser } from "react-near";
 import { getNearConfig } from "../../configs/near";
 import { QUAN_CLIENT_STORAGE_PREFIX } from "../../constants/client";
@@ -273,19 +273,39 @@ const StrategyModal: React.FC<{
     await removeStrategy(nowId);
   }
 
+  const handlePause = async () => {
+    if (!clientContractId.contractId || !clientWallet) {
+      alert("Preparing, please wait!");
+      return;
+    }
+    if (nowId === undefined) {
+      return;
+    }
+    const updateStrategy = updateStrategyByWallet(clientContractId.contractId, clientWallet);
+
+    await updateStrategy(nowId, { status: EStrategyStatus.PAUSED } as ant);
+  }
+
+  const canPause = useMemo(() => {
+    return [
+      EStrategyStatus.INIT,
+      EStrategyStatus.ACTIVE,
+    ].includes(status!);
+  }, [status])
+
   const actions = (
     <div className={styles.actions}>
       {
         nowId !== undefined && (
           <>
-            <Button type="pure" schema="white" className={styles.modalBtn} size="middle">
+            {canPause && <Button type="pure" schema="white" className={styles.modalBtn} size="middle" onClick={handlePause}>
               Pause Strategy
-            </Button>
+            </Button>}
             <Button schema="danger" className={styles.modalBtn} size="middle" onClick={handleRemove}>
               Delete
             </Button>
             <Button
-              className={styles.modalBtn}
+              className={errrrrstyles.modalBtn}
               size="middle"
               onClick={handleCreateOrUpdate}
               disabled={loading}
