@@ -65,7 +65,7 @@ def calc_total_amount(account_id):
         "wrap.testnet",
         "usdt.fakes.testnet",
         "usdc.fakes.testnet",
-        "ft.waver.testnet"
+        # "ft.waver.testnet"
     ]
     total_amount = 0.0
     token_list = list()
