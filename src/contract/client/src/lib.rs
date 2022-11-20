@@ -187,9 +187,9 @@ impl Contract {
     }
 
     // actions
-    pub fn remove_strategy(&mut self, pool_id: String) -> Option<Strategy> {
+    pub fn remove_strategy(&mut self, id: String) -> Option<Strategy> {
         self.assert_owner();
-        let strategy = self.strategies.remove(&pool_id);
+        let strategy = self.strategies.remove(&id);
         if strategy.is_some() { Some(strategy.unwrap()) } else { None }
     }
 

@@ -90,7 +90,7 @@ impl Strategy {
             stype: data.stype,
             target_ft: data.target_ft,
             invest_ft: data.invest_ft,
-            status: INIT,
+            status: ACTIVE,
             created: util::current_time().into(),
             amount: data.amount,
             expression: data.expression,
