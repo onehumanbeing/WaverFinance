@@ -12,6 +12,7 @@ import BiggerChartLine from "../../../components/BiggerChartLine";
 import styles from "./index.module.scss";
 import StrategyModal from "../../../components/StrategyModal";
 import { EStrategyType, EStrategyStatus, getQuanClientStrategy, getQuanClientStrategyList, IStrategyInfo, useClientContractId } from "../../../services/near/quan-client";
+import Head from "next/head";
 
 const CreateBtn: React.FC<{
   children?: React.ReactNode;
@@ -142,6 +143,13 @@ const MyStrategyPage: NextPage = () => {
 
   return (
     <LayoutApp>
+
+      <Head>
+        <title>My Strategy - Waver</title>
+        <meta name="description" content="The First Decentralized Quantitative Trading Platform on NEAR" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <StrategyModal
         active={active}
         onClose={() => { setActive(!active) }}

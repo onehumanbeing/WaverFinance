@@ -19,6 +19,7 @@ import StorageIcon from "../../../assets/img/icons/storage.svg";
 import styles from "./index.module.scss";
 import { useRouter } from "next/router";
 import { useQuanMainContract, useQuanMainGetContractQuery } from "../../../services/near/quan-main";
+import Head from "next/head";
 
 const BalanceCardPart: React.FC<{
   className: string,
@@ -83,6 +84,13 @@ const BalanceCardPart: React.FC<{
 const MyAssetsPage: NextPage = () => {
   return (
     <LayoutApp>
+
+      <Head>
+        <title>My Assets - Waver</title>
+        <meta name="description" content="The First Decentralized Quantitative Trading Platform on NEAR" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      
       <div className={styles.myAssetsPage__container}>
         <div className={styles.contractInfo}>
           <div className={styles.leftPart}>
