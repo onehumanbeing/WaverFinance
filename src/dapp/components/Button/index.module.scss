@@ -3,9 +3,11 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  opacity: 1;
 
   &[disabled] {
     cursor: not-allowed;
+    opacity: 0.6;
   }
 
   .loading {
@@ -38,10 +40,22 @@
 
   &:hover {
     transform: scale(1.1);
+
+    &[disabled] {
+      transform: scale(1);
+    }
   }
 
   &:active {
     transform: scale(0.9);
+
+    &[disabled] {
+      transform: scale(1);
+    }
+  }
+
+  &[disabled] {
+    transform: scale(1);
   }
 }
 
@@ -57,6 +71,10 @@
   &.button__size-middle {
     height: 3em;
   }
+}
+
+.button__type-pure {
+  @include scaleHover;
 }
 
 .button__type-minimal {

@@ -7,7 +7,7 @@ import { StorageContract } from "react-near/standards/storage/types";
 import { FT_METHODS } from "react-near/standards/ft/config";
 import { STORAGE_METHODS } from "react-near/standards/storage/config";
 import { getNearConfig } from '../../configs/near';
-import { AccountId } from './common';
+import { AccountId, FtAmountString, NearFiveDigitAmount } from './common';
 
 export enum EQuanMainViewMethods {
   get_contract = "get_contract",
@@ -15,6 +15,7 @@ export enum EQuanMainViewMethods {
 
 export enum EQuanMainChangeMethods {
   create_contract = "create_contract",  // payable
+
 }
 
 export interface IQuanMainContract {
@@ -82,5 +83,3 @@ export type ICreateContractResult = string | null;
 export function useQuanMainCreateContractMutation(opts: NearMutationOptions<ICreateContractResult, ICreateContractArgs>) {
     return useQuanMainContractMutationRaw<ICreateContractResult, ICreateContractArgs>(EQuanMainChangeMethods.create_contract, opts);
 }
-
-

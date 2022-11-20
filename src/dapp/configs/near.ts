@@ -21,12 +21,12 @@ interface INetworkConfig {
 }
 
 const supportTargetTestnetFt = {
-  "ft.waver.testnet": "WAVER",
+  // "ft.waver.testnet": "WAVER",
   "wrap.testnet": "wNear",
 }
 
 const supportTargetMainnetFt = {
-  "ft.waver.near": "WAVER",
+  // "ft.waver.near": "WAVER",
   "wrap.near": "wNear",
 }
 

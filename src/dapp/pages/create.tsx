@@ -13,7 +13,7 @@ import { useQuanMainCreateContractMutation, useQuanMainGetContractQuery } from "
 import { trimEnd } from "../utils/string";
 import { getNearConfig } from "../configs/near";
 import { signTransaction, Transaction } from "near-api-js/lib/transaction";
-import { SignMultipleTrxsHelper } from "../utils/signMultiTrxs";
+import { NearHelper } from "../utils/nearHelper";
 import { GAS_FEE } from "../constants/gasFee";
 
 const CREATION_DEPOSIT_VAL = 2.5;
@@ -62,7 +62,7 @@ const CreatePage: React.FC = () => {
       return;
     }
 
-    const helper = new SignMultipleTrxsHelper({ near, wallet });
+    const helper = new NearHelper({ near, wallet });
     helper.executeMultipleTransactions([
       {
         receiverId: config.contractId,

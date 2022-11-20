@@ -1,0 +1,70 @@
+
+
+.createStrategyModal {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5em;
+
+  .modal__head {
+    .title {
+      margin-bottom: 0;
+    }
+  }
+  .inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 3em;
+    width: 100%;
+
+    .part {
+      display: flex;
+      gap: 1.5em;
+
+      .part__number {
+        $size: 2em;
+
+        width: $size;
+        height: $size;
+        color: #000;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: $size / 5;
+        font-weight: 600;
+      }
+
+      .part__content {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2em;
+        width: 100%;
+
+        .part__content__title {
+          font-size: 1.5em;
+          font-weight: 600;
+          color: #fff;
+          opacity: 0.8;
+        }
+
+        .part__content__input_group {
+          display: grid;
+          width: 100%;
+          grid-template-columns: repeat(2, 1fr);
+          column-gap: 2em;
+          row-gap: 1.5em;
+        }
+      }
+    }
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 1em;
+}
+
+.modalBtn {
+  font-size: 0.8em;
+}

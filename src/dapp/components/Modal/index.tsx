@@ -8,6 +8,7 @@ const Modal: React.FC<{
   className?: string,
   style?: React.CSSProperties,
   title?: string,
+  loading?: boolean,
   children: React.ReactNode,
   active: boolean,
   action?: React.ReactNode,

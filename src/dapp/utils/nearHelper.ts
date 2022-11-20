@@ -4,8 +4,25 @@ import { FunctionCallOptions } from "near-api-js/lib/account"
 import { Action, createTransaction, functionCall } from "near-api-js/lib/transaction"
 import { PublicKey } from "near-api-js/lib/utils"
 import { base_decode } from "near-api-js/lib/utils/serialize"
+import { GAS_FEE } from "../constants/gasFee";
 
-export class SignMultipleTrxsHelper {
+export const getAmount = (amount: string | null | undefined) =>
+	amount ? new BN(amount) : new BN('0')
+
+interface IViewFunction {
+	contractName: string
+	methodName: string
+	args?: {
+		[key: string]: string | number | null
+	}
+}
+
+interface IFunctionCall extends IViewFunction {
+	gas?: string
+	amount?: string
+}
+
+export class NearHelper {
 
 	public near!: Near
 	public wallet!: WalletConnection
@@ -13,6 +30,26 @@ export class SignMultipleTrxsHelper {
 	constructor({ near, wallet }: { near: Near, wallet: WalletConnection }) {
 		this.near = near;
 		this.wallet = wallet;
+	}
+
+	public nearFunctionCall({
+		methodName,
+		args = {},
+		gas = GAS_FEE[100],
+		amount,
+		contractName,
+	}: IFunctionCall) {
+		return this.wallet.account().functionCall({
+			contractId: contractName,
+			methodName,
+			attachedDeposit: getAmount(amount),
+			gas: getAmount(gas),
+			args,
+		})
+	}
+
+	public nearViewFunction({ methodName, args, contractName }: IViewFunction) {
+		return this.wallet.account().viewFunction(contractName, methodName, args)
 	}
 
 	async createTransaction({
