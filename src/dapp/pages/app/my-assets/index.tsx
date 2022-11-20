@@ -20,6 +20,8 @@ import styles from "./index.module.scss";
 import { useRouter } from "next/router";
 import { useQuanMainContract, useQuanMainGetContractQuery } from "../../../services/near/quan-main";
 import Head from "next/head";
+import { EStrategyType, useClientContractId } from "../../../services/near/quan-client";
+import { useHistoryActivities } from "../../../hooks/waver";
 
 const BalanceCardPart: React.FC<{
   className: string,
@@ -82,6 +84,11 @@ const BalanceCardPart: React.FC<{
 }
 
 const MyAssetsPage: NextPage = () => {
+
+  const { contractId } = useClientContractId();
+
+  const { activities } = useHistoryActivities();
+
   return (
     <LayoutApp>
 
@@ -90,7 +97,7 @@ const MyAssetsPage: NextPage = () => {
         <meta name="description" content="The First Decentralized Quantitative Trading Platform on NEAR" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      
+
       <div className={styles.myAssetsPage__container}>
         <div className={styles.contractInfo}>
           <div className={styles.leftPart}>
@@ -116,7 +123,7 @@ const MyAssetsPage: NextPage = () => {
             <Card title="Smart Contract" className={styles.contractInfoCard}>
               <AddressId 
                 className={styles.contractInfoCard__address} 
-                addressId="opshenry.starark.near" 
+                addressId={contractId ?? ""}
                 copyable
               />
               <div className={styles.version}>Version 1.0.0</div>
@@ -192,38 +199,53 @@ const MyAssetsPage: NextPage = () => {
           </div>
         </div>
         <Card className={styles.recentActivityCard} title="Recent Activity">
-          <Table
+          {activities && <Table
             className={styles.activityTable}
             columns={[
               {
                 title: "Assets",
-                dataIndex: "contractId",
+                dataIndex: "contract_id",
                 render: (contractId: string) => (
                   <TokenInfo contractId={contractId} showName />
                 )
               },
               {
                 title: "Action",
-                dataIndex: "action",
-                render: (amount: string, { contractId }) => (
-                  <div className={styles.activityTable__action}>
-                    Buy
-                  </div>
-                )
+                dataIndex: "stype",
+                render: (stype: EStrategyType) => {
+                  const getAction = () => {
+                    if (stype === EStrategyType.BUY) {
+                      return "Buy";
+                    }
+                    if (stype === EStrategyType.SALE) {
+                      return "Sale";
+                    }
+                    if (stype === EStrategyType.GRID) {
+                      return "Grid";
+                    }
+                    return "Unknown";
+
+                  }
+                  return (
+                    <div className={styles.activityTable__action}>
+                      {getAction()}
+                    </div>
+                  )
+                }
               },
               {
                 title: "Type",
-                dataIndex: "type",
-                render: (amount: string, { contractId }) => (
+                dataIndex: "id",
+                render: (id: number) => (
                   <div className={styles.activityTable__type}>
-                    Stragegy #1
+                    Stragegy #{id}
                   </div>
                 )
               },
               {
                 title: "Amount In",
-                dataIndex: "amount_in",
-                render: (amount: string, { contractId }) => (
+                dataIndex: "amount_in_contract",
+                render: (contractId: string) => (
                   <div className={styles.activityTable__amountIn}>
                     1000 Near
                   </div>
@@ -231,7 +253,7 @@ const MyAssetsPage: NextPage = () => {
               },
               {
                 title: "Amount Out",
-                dataIndex: "amount_out",
+                dataIndex: "amount_out_contract",
                 render: (amount: string, { contractId }) => (
                   <div className={styles.activityTable__amountOut}>
                     30,000 USDC
@@ -240,20 +262,16 @@ const MyAssetsPage: NextPage = () => {
               },
               {
                 title: "Created At",
-                dataIndex: "created_at",
-                render: (amount: string, { contractId }) => (
+                dataIndex: "updated",
+                render: (updated: string) => (
                   <div className={styles.activityTable__amountOut}>
-                    {new Date("2022-1-1").toLocaleString()}
+                    {new Date(updated).toLocaleString()}
                   </div>
                 )
               },
             ]}
-            dataSource={[
-              { contractId: "near", amount: "10000" },
-              { contractId: "near", amount: "10000" },
-              { contractId: "near", amount: "10000" },
-            ]}
-          />
+            dataSource={activities}
+          />}
         </Card>
       </div>
     </LayoutApp>

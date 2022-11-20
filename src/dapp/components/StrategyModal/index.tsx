@@ -286,6 +286,19 @@ const StrategyModal: React.FC<{
     await updateStrategy(nowId, { status: EStrategyStatus.PAUSED } as any);
   }
 
+  const handleStart = async () => {
+    if (!clientContractId.contractId || !clientWallet) {
+      alert("Preparing, please wait!");
+      return;
+    }
+    if (nowId === undefined) {
+      return;
+    }
+    const updateStrategy = updateStrategyByWallet(clientContractId.contractId, clientWallet);
+
+    await updateStrategy(nowId, { status: EStrategyStatus.ACTIVE } as any);
+  }
+
   const canPause = useMemo(() => {
     return [
       EStrategyStatus.INIT,
@@ -300,6 +313,9 @@ const StrategyModal: React.FC<{
           <>
             {canPause && <Button type="pure" schema="white" className={styles.modalBtn} size="middle" onClick={handlePause}>
               Pause Strategy
+            </Button>}
+            {status === EStrategyStatus.PAUSED && <Button type="pure" schema="white" className={styles.modalBtn} size="middle" onClick={handleStart}>
+              Active Strategy
             </Button>}
             <Button schema="danger" className={styles.modalBtn} size="middle" onClick={handleRemove}>
               Delete

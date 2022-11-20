@@ -34,6 +34,19 @@ export type TWaverResList<TData> = {
   list: TData[];
 }
 
+export type TWaverRes<TData> = {
+  data: TData,
+  msg: string,
+  status: number,
+}
+
+export type TWaverStatistic = {
+  "24h": number;
+  "7d": number;
+  "active_strategies": number;
+  "active_trading": number;
+}
+
 export type TWaverHistory = { 
   contract_id: string,
   id:number,
@@ -88,8 +101,8 @@ const waverApi = {
       method: 'GET',
     });
   },
-  getStatistics (account_id: string) {
-    return requestWaver(`/statistics?account_id=${account_id}`, {
+  getStatistics (account_id: string): Promise<TWaverRes<TWaverStatistic>> {
+    return requestWaver(`/statistic?account_id=${account_id}`, {
       method: 'GET',
     });
   },
