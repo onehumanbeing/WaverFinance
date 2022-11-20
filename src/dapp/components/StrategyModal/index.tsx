@@ -369,7 +369,7 @@ const StrategyModal: React.FC<{
 
         setExpression(strategy.expression?.toString() ?? expressionDefault);
         setPrice(strategy.target_price ? from5Decimal(strategy.target_price) : 0);
-        const amountVal =  strategy.stype === EStrategyType.BUY ? parseFloat(formatNearAmount(strategy.amount ?? "0")) : from5Decimal(parseFloat(strategy.amount ?? "0"));
+        const amountVal =  strategy.stype === EStrategyType.BUY ? from5Decimal(parseFloat(strategy.amount ?? "0")) : parseFloat(formatNearAmount(strategy.amount ?? "0"));
         setAmount(strategy.amount ? amountVal : 0);
 
         setGridSize(strategy.grid_size ? parseFloat(formatNearAmount(strategy.grid_size)) : 0);
