@@ -181,7 +181,9 @@ const MyStrategyPage: NextPage = () => {
         </div>
         <div className={styles.secondRow}>
           <div className={styles.title}>Overview</div>
-          <BiggerChartLine data={[]} />
+          <BiggerChartLine
+            tokenId={"wrap.testnet"} demo
+          />
         </div>
       </div>
     </LayoutApp>
