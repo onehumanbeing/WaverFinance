@@ -1,4 +1,6 @@
 import { getNearConfig } from "../../configs/near"
+import { AccountId, FtAmountString } from "../near/common";
+import { EStrategyType } from "../near/quan-client";
 
 const config = getNearConfig();
 const baseUrl = `${config.waverBackendUrl}/api`;
@@ -28,6 +30,38 @@ const requestWaver = async <TData=any> (path: string, options: IRequestOptions =
   }
 }
 
+export type TWaverResList<TData> = { 
+  list: TData[];
+}
+
+export type TWaverHistory = { 
+  contract_id: string,
+  id:number,
+  price: number,
+  updated: string,
+}
+
+export type TWaverActivity = {
+  amount_in: FtAmountString
+  amount_in_contract: AccountId,
+  amount_in_decimals: number,
+  amount_in_name: string,
+  amount_out: FtAmountString,
+  amount_out_contract: AccountId,
+  amount_out_decimals: number,
+  amount_out_name: string,
+  contract_id: AccountId,
+  failed_msg: string,
+  gas_burnt: number,
+  id: number,
+  index: string,
+  logs: string,
+  price: number,
+  stype: EStrategyType,
+  success: boolean,
+  tgas: number,
+  updated: string,
+}
 
 const waverApi = {
   request: requestWaver,
@@ -49,7 +83,7 @@ const waverApi = {
       method: 'GET',
     });
   },
-  getRecentActivities (account_id: string) {
+  getRecentActivities (account_id: string): Promise<TWaverResList<TWaverActivity>> {
     return requestWaver(`/recent_activities?account_id=${account_id}`, {
       method: 'GET',
     });
@@ -59,8 +93,8 @@ const waverApi = {
       method: 'GET',
     });
   },
-  getTokenPriceHistory (token_id: string) {
-    return requestWaver(`/token_price_history?account_id=${token_id}`, {
+  getTokenPriceHistory (token_id: string): Promise<TWaverResList<TWaverHistory>> {
+    return requestWaver(`/history_token_price?account_id=${token_id}`, {
       method: 'GET',
     }); 
   },
