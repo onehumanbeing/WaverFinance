@@ -22,25 +22,25 @@ export const useHistoryActivities = () => {
   return { activities };
 }
 
-export const useWaverStatistic = () => {
-  const [data, setData] = useState<TWaverStatistic>();
-  const { contractId } = useClientContractId();
+// export const useWaverStatistic = () => {
+//   const [data, setData] = useState<TWaverStatistic>();
+//   const { contractId } = useClientContractId();
 
-  useEffect(() => {
-    if (!contractId) {
-      return;
-    }
+//   useEffect(() => {
+//     if (!contractId) {
+//       return;
+//     }
 
-    const fetchActivities = async () => {
-      const res = await waverApi.getRecentActivities(contractId);
-      setActivities(res.list);
-    }
+//     const fetchActivities = async () => {
+//       const res = await waverApi.getRecentActivities(contractId);
+//       setActivities(res.list);
+//     }
 
-    fetchActivities();
-  }, [contractId]);
+//     fetchActivities();
+//   }, [contractId]);
 
-  return { activities };
-}
+//   return { activities };
+// }
 // export const useHistoryActivities = () => {
 //   const [activities, setActivities] = useState<TWaverActivity[]>();
 //   const { contractId } = useClientContractId();

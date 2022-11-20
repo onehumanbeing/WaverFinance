@@ -13,6 +13,7 @@ import styles from "./index.module.scss";
 import StrategyModal from "../../../components/StrategyModal";
 import { EStrategyType, EStrategyStatus, getQuanClientStrategy, getQuanClientStrategyList, IStrategyInfo, useClientContractId } from "../../../services/near/quan-client";
 import Head from "next/head";
+import waverApi from "../../../services/rest/waver";
 
 const CreateBtn: React.FC<{
   children?: React.ReactNode;
@@ -38,7 +39,7 @@ const MyStrategyTable: React.FC<{
   const { contractId } = useClientContractId();
 
   useEffect(() => {
-    if (!nearUser.account || !contractId) {
+    if (!nearUser.account || !nearUser.address || !contractId) {
       return;
     }
 
@@ -49,13 +50,14 @@ const MyStrategyTable: React.FC<{
       
       return Promise.all(ids.map(async id => { 
         const info = await getStrategy(id);
+        setTimeout(() => waverApi.activeStrategy(nearUser.address!, id), 1000);
         return { id, ...info };
       }));
     }).then((value) => {
       console.log("get strategys:", value);
       setData(value);
     })
-  }, [contractId, nearUser.account])
+  }, [contractId, nearUser.account, nearUser.address])
 
   return (
     <Table 
