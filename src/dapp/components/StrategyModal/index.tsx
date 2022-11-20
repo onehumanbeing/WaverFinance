@@ -239,14 +239,16 @@ const StrategyModal: React.FC<{
       const updateStrategy = updateStrategyByWallet(clientContractId.contractId, clientWallet);
 
       if (isBuyOrSaleType(strategyType)) {
+        const stype = parseInt(strategyType);
+        const amountStr = stype === EStrategyType.BUY ? to5Decimal(amount).toString() : parseNearAmount(amount.toString())!;
         await updateStrategy(nowId, {
           target_ft: targetAssets,
           invest_ft: investAssets,
-          stype: parseInt(strategyType),
+          stype,
           expression: parseInt(expression),
           target_price: to5Decimal(price),
           // TODO: Need to trans to others if not NEAR
-          amount: parseNearAmount(amount.toString())!,
+          amount: amountStr,
         });
       } else {
         await updateStrategy(nowId, {
@@ -367,7 +369,8 @@ const StrategyModal: React.FC<{
 
         setExpression(strategy.expression?.toString() ?? expressionDefault);
         setPrice(strategy.target_price ? from5Decimal(strategy.target_price) : 0);
-        setAmount(strategy.amount ? parseFloat(formatNearAmount(strategy.amount)) : 0);
+        const amountVal =  strategy.stype === EStrategyType.BUY ? parseFloat(formatNearAmount(strategy.amount ?? "0")) : from5Decimal(parseFloat(strategy.amount ?? "0"));
+        setAmount(strategy.amount ? amountVal : 0);
 
         setGridSize(strategy.grid_size ? parseFloat(formatNearAmount(strategy.grid_size)) : 0);
         setGridInterval(strategy.grid_intervel ? from5Decimal(strategy.grid_intervel) : 0);
