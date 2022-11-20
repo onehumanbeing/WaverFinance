@@ -450,7 +450,7 @@ const StrategyModal: React.FC<{
                         onChange={setExpression}
                       />
                       <Input
-                        title="Price ($ per FT)"
+                        title="Price (USD)"
                         type="number"
                         value={price}
                         onChange={(val) => setPrice(val ? parseFloat(val) : 0)}

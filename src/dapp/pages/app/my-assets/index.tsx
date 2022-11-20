@@ -87,14 +87,14 @@ const BalanceCardPart: React.FC<{
 const MyAssetsPage: NextPage = () => {
 
   const { contractId } = useClientContractId();
-
+  const nearUser = useNearUser();
   const { activities } = useHistoryActivities();
 
   useEffect(() => {
-    if (contractId) {
-      waverApi.activeContract(contractId);
+    if (nearUser.address) {
+      waverApi.activeContract(nearUser.address);
     }
-  }, [contractId])
+  }, [nearUser.address])
 
   return (
     <LayoutApp>

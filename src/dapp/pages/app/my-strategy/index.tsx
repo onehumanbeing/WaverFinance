@@ -143,13 +143,14 @@ const MyStrategyPage: NextPage = () => {
     setStrategyId(id);
   }, []);
 
-  const { contractId } = useClientContractId();
+  // const { contractId } = useClientContractId();
+  const nearUser = useNearUser();
 
   useEffect(() => {
-    if (contractId) {
-      waverApi.activeContract(contractId);
+    if (nearUser.address) {
+      waverApi.activeContract(nearUser.address);
     }
-  }, [contractId])
+  }, [nearUser.address])
 
   return (
     <LayoutApp>
