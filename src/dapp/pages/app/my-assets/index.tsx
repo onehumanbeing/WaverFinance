@@ -96,6 +96,14 @@ const MyAssetsPage: NextPage = () => {
     }
   }, [nearUser.address])
 
+  const withdraw = async () => {
+    const amount = prompt("Please input the amount of NEAR you want to withdraw");
+    if (!amount || parseFloat(amount) <= 0) {
+      alert("Please input valid amount!");
+      return;
+    }
+  }
+
   return (
     <LayoutApp>
 
@@ -124,7 +132,7 @@ const MyAssetsPage: NextPage = () => {
                 title="Deposit Amount"
                 icon={<img className={styles.icon} src={StorageIcon.src} alt="storage icon" />}
                 value={<TrendDigital digital={5} suffix=" NEAR" />}
-                extra={<Button className={styles.withdrawBtn} type="minimal" schema="white">Withdraw</Button>}
+                extra={<Button className={styles.withdrawBtn} type="minimal" schema="white" onClick={withdraw}>Withdraw</Button>}
               />
             </Card>
             <Card title="Smart Contract" className={styles.contractInfoCard}>

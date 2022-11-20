@@ -210,14 +210,17 @@ const StrategyModal: React.FC<{
       const createStrategy = createStrategyByWallet(clientContractId.contractId, clientWallet);
 
       if (isBuyOrSaleType(strategyType)) {
+        const stype = parseInt(strategyType);
+        const amountStr = stype === EStrategyType.BUY ? to5Decimal(amount).toString() : parseNearAmount(amount.toString())!;
+
         await createStrategy({
           target_ft: targetAssets,
           invest_ft: investAssets,
-          stype: parseInt(strategyType),
+          stype,
           expression: parseInt(expression),
           target_price: to5Decimal(price),
           // TODO: Need to trans to others if not NEAR
-          amount: parseNearAmount(amount.toString())!,
+          amount: amountStr,
         });
       } else {
         await createStrategy({
