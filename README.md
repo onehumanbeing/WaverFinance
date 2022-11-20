@@ -4,9 +4,15 @@ Waver Finance is the first decentralized quantitative trading platform on the NE
 
 We provide secure, transparent, intelligent, and low-cost quantitative trading services to all users.
 
-# Project demo
+# Codes
 
-[Waver Finance](https://waver.finance/)
+* src/contract/client: Waver locked sub-contract for users
+
+* src/contract/meta: Waver main contract & ft contract
+
+* src/query/index.py: Waver backend query server
+
+* src/query/loop.py: Waver oracle request process
 
 # Transactions Examples
 
@@ -51,7 +57,7 @@ The 3rd stake battle of NEAR inspired me to build the platform-based service. Sp
 
 *waver_client* allows each user to have a unique client contract. If the user's wallet address is *alex.testnet*, he would get a wallet *alex.waver.testnet*. By transferring cryptocurrency assets to this wallet, users can have their assets held in escrow. The client contract stores all trading strategies, and checks the legitimacy of the request against the strategy ID for the user when the oracle machine submits it. This allows the user and the oracle machine to work together with zero trust.
 
-Our Dapp & dashboard is based on React.js, and next.js, supporting multiple accounts sign-in.  Our backend query server is based on Flask, a micro server written in python, deployed on AWS. We use a timed process to simulate the flow of automated trading.
+Our Dapp & dashboard is based on React.js, and next.js. Our backend query server is based on Flask, a micro server written in python, deployed on AWS. We use a timed process to simulate the flow of automated trading.
 
 ## Challenges we ran into
 
