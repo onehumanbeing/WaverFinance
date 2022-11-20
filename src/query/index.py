@@ -149,10 +149,18 @@ def active_strategy():
     pk = request.args.get("id", None)
     if pk is None:
         return response(1, "id invalid")
-    data = rpc_get_strategy(account_id, pk)
-    data['contract_id'] = account_id
-    data['index'] = pk
-    create_or_update_strategy(data)
+    retry_times = 3
+    current = 0
+    while current < retry_times:
+        try:
+            data = rpc_get_strategy(account_id, pk)
+            data['contract_id'] = account_id
+            data['index'] = pk
+            create_or_update_strategy(data)
+            return success()
+        except:
+            current += 1
+            continue
     return success()
 
 @app.route('/api/active_contract')
@@ -161,11 +169,19 @@ def active_contract():
     account_id = request.args.get("account_id", None)
     if account_id is None:
         return response(1, "account_id invalid")
-    contract_id = rpc_get_contract(account_id)
-    if contract_id is None:
-        return response(2, "contract_id invalid")
-    # set contract
-    create_account_contract(account_id, contract_id)
+    retry_times = 3
+    current = 0
+    while current < retry_times:
+        try:
+            contract_id = rpc_get_contract(account_id)
+            if contract_id is None:
+                return response(2, "contract_id invalid")
+            # set contract
+            create_account_contract(account_id, contract_id)
+            return success()
+        except:
+            current += 1
+            continue
     return success()
 
 @app.route('/api/token_price')
