@@ -283,7 +283,7 @@ const StrategyModal: React.FC<{
     }
     const updateStrategy = updateStrategyByWallet(clientContractId.contractId, clientWallet);
 
-    await updateStrategy(nowId, { status: EStrategyStatus.PAUSED } as ant);
+    await updateStrategy(nowId, { status: EStrategyStatus.PAUSED } as any);
   }
 
   const canPause = useMemo(() => {
@@ -305,7 +305,7 @@ const StrategyModal: React.FC<{
               Delete
             </Button>
             <Button
-              className={errrrrstyles.modalBtn}
+              className={styles.modalBtn}
               size="middle"
               onClick={handleCreateOrUpdate}
               disabled={loading}
