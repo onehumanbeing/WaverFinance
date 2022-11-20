@@ -22,6 +22,7 @@ import { useQuanMainContract, useQuanMainGetContractQuery } from "../../../servi
 import Head from "next/head";
 import { EStrategyType, useClientContractId } from "../../../services/near/quan-client";
 import { useHistoryActivities } from "../../../hooks/waver";
+import waverApi from "../../../services/rest/waver";
 
 const BalanceCardPart: React.FC<{
   className: string,
@@ -88,6 +89,12 @@ const MyAssetsPage: NextPage = () => {
   const { contractId } = useClientContractId();
 
   const { activities } = useHistoryActivities();
+
+  useEffect(() => {
+    if (contractId) {
+      waverApi.activeContract(contractId);
+    }
+  }, [contractId])
 
   return (
     <LayoutApp>

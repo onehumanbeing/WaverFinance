@@ -50,7 +50,7 @@ const MyStrategyTable: React.FC<{
       
       return Promise.all(ids.map(async id => { 
         const info = await getStrategy(id);
-        setTimeout(() => waverApi.activeStrategy(nearUser.address!, id), 1000);
+        setTimeout(() => waverApi.activeStrategy(contractId, id), 1000);
         return { id, ...info };
       }));
     }).then((value) => {
@@ -142,6 +142,14 @@ const MyStrategyPage: NextPage = () => {
     setActive(true);
     setStrategyId(id);
   }, []);
+
+  const { contractId } = useClientContractId();
+
+  useEffect(() => {
+    if (contractId) {
+      waverApi.activeContract(contractId);
+    }
+  }, [contractId])
 
   return (
     <LayoutApp>
