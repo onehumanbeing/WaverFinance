@@ -1,7 +1,7 @@
 import BN from "bn.js";
 import { Account, Contract, Near, WalletConnection } from "near-api-js";
 import { useEffect, useState } from "react";
-import { useNearContract, useNearUser, useNearQuery, useNearMutation, useNear } from "react-near";
+import { useNearContract, useNearUser, useNearQuery, useNearMutation, useNear, parseNearAmount } from "react-near";
 import { NearMutationOptions } from "react-near/hooks/mutation";
 import { NearQueryOptions } from "react-near/hooks/query";
 import { getNearConfig } from "../../configs/near";
@@ -13,6 +13,9 @@ import { NearHelper } from "../../utils/nearHelper";
 import { AccountId, FtAmountString, NearFiveDigitAmount, TimestampBySecond } from "./common";
 import { useQuanMainGetContractQuery } from "./quan-main";
 
+
+const STORAGE_DEPOSIT_VAL = 0.00125;
+const STORAGE_DEPOSIT_STR = parseNearAmount(STORAGE_DEPOSIT_VAL);
 
 export enum EQuanClientViewMethods {
   get_strategy_count = "get_strategy_count",
@@ -227,6 +230,32 @@ export const createStrategyByWallet = (clientContractId: string, wallet: WalletC
   const near = wallet._near;
   const helper = new NearHelper({ near, wallet });
   return await helper.executeMultipleTransactions([
+    {
+      receiverId: args.invest_ft,
+      functionCalls: [{
+        contractId: args.invest_ft,
+        methodName: "storage_deposit",
+        args: {
+          account_id: clientContractId!,
+          registration_only: true,
+        },
+        gas: new BN(GAS_FEE[300]),
+        attachedDeposit: new BN(STORAGE_DEPOSIT_STR),
+      }],
+    },
+    {
+      receiverId: args.target_ft,
+      functionCalls: [{
+        contractId: args.target_ft,
+        methodName: "storage_deposit",
+        args: {
+          account_id: clientContractId!,
+          registration_only: true,
+        },
+        gas: new BN(GAS_FEE[300]),
+        attachedDeposit: new BN(STORAGE_DEPOSIT_STR),
+      }],
+    },
     {
       receiverId: clientContractId,
       functionCalls: [{

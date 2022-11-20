@@ -15,6 +15,7 @@ import { getNearConfig } from "../configs/near";
 import { signTransaction, Transaction } from "near-api-js/lib/transaction";
 import { NearHelper } from "../utils/nearHelper";
 import { GAS_FEE } from "../constants/gasFee";
+import Head from "next/head";
 
 const CREATION_DEPOSIT_VAL = 2.5;
 const CREATION_DEPOSIT_STR = parseNearAmount(CREATION_DEPOSIT_VAL);
@@ -94,6 +95,13 @@ const CreatePage: React.FC = () => {
 
   return (
     <div className={styles.content}>
+
+      <Head>
+        <title>Create Contract - Waver</title>
+        <meta name="description" content="The First Decentralized Quantitative Trading Platform on NEAR" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <Link href={"/"}>
         <a>
           <Logo className={styles.logo} /> 

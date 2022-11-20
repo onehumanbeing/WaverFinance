@@ -9,7 +9,7 @@ const Table: React.FC<{
     dataIndex: string,
     key?: string,
     flexWidth?: number,
-    render?: (text: string, record: any, index: number) => React.ReactNode,
+    render?: (text: any, record: any, index: number) => React.ReactNode,
   }[],
   dataSource: any[],
   rowKey?: string,

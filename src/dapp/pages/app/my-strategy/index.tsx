@@ -12,6 +12,8 @@ import BiggerChartLine from "../../../components/BiggerChartLine";
 import styles from "./index.module.scss";
 import StrategyModal from "../../../components/StrategyModal";
 import { EStrategyType, EStrategyStatus, getQuanClientStrategy, getQuanClientStrategyList, IStrategyInfo, useClientContractId } from "../../../services/near/quan-client";
+import Head from "next/head";
+import waverApi from "../../../services/rest/waver";
 
 const CreateBtn: React.FC<{
   children?: React.ReactNode;
@@ -37,7 +39,7 @@ const MyStrategyTable: React.FC<{
   const { contractId } = useClientContractId();
 
   useEffect(() => {
-    if (!nearUser.account || !contractId) {
+    if (!nearUser.account || !nearUser.address || !contractId) {
       return;
     }
 
@@ -48,13 +50,14 @@ const MyStrategyTable: React.FC<{
       
       return Promise.all(ids.map(async id => { 
         const info = await getStrategy(id);
+        setTimeout(() => waverApi.activeStrategy(contractId, id), 1000);
         return { id, ...info };
       }));
     }).then((value) => {
       console.log("get strategys:", value);
       setData(value);
     })
-  }, [contractId, nearUser.account])
+  }, [contractId, nearUser.account, nearUser.address])
 
   return (
     <Table 
@@ -140,8 +143,24 @@ const MyStrategyPage: NextPage = () => {
     setStrategyId(id);
   }, []);
 
+  // const { contractId } = useClientContractId();
+  const nearUser = useNearUser();
+
+  useEffect(() => {
+    if (nearUser.address) {
+      waverApi.activeContract(nearUser.address);
+    }
+  }, [nearUser.address])
+
   return (
     <LayoutApp>
+
+      <Head>
+        <title>My Strategy - Waver</title>
+        <meta name="description" content="The First Decentralized Quantitative Trading Platform on NEAR" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <StrategyModal
         active={active}
         onClose={() => { setActive(!active) }}

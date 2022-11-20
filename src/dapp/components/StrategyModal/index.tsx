@@ -1,5 +1,5 @@
 import { formatNearAmount, parseNearAmount } from "near-api-js/lib/utils/format";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNearUser } from "react-near";
 import { getNearConfig } from "../../configs/near";
 import { QUAN_CLIENT_STORAGE_PREFIX } from "../../constants/client";
@@ -273,14 +273,50 @@ const StrategyModal: React.FC<{
     await removeStrategy(nowId);
   }
 
+  const handlePause = async () => {
+    if (!clientContractId.contractId || !clientWallet) {
+      alert("Preparing, please wait!");
+      return;
+    }
+    if (nowId === undefined) {
+      return;
+    }
+    const updateStrategy = updateStrategyByWallet(clientContractId.contractId, clientWallet);
+
+    await updateStrategy(nowId, { status: EStrategyStatus.PAUSED } as any);
+  }
+
+  const handleStart = async () => {
+    if (!clientContractId.contractId || !clientWallet) {
+      alert("Preparing, please wait!");
+      return;
+    }
+    if (nowId === undefined) {
+      return;
+    }
+    const updateStrategy = updateStrategyByWallet(clientContractId.contractId, clientWallet);
+
+    await updateStrategy(nowId, { status: EStrategyStatus.ACTIVE } as any);
+  }
+
+  const canPause = useMemo(() => {
+    return [
+      EStrategyStatus.INIT,
+      EStrategyStatus.ACTIVE,
+    ].includes(status!);
+  }, [status])
+
   const actions = (
     <div className={styles.actions}>
       {
         nowId !== undefined && (
           <>
-            <Button type="pure" schema="white" className={styles.modalBtn} size="middle">
+            {canPause && <Button type="pure" schema="white" className={styles.modalBtn} size="middle" onClick={handlePause}>
               Pause Strategy
-            </Button>
+            </Button>}
+            {status === EStrategyStatus.PAUSED && <Button type="pure" schema="white" className={styles.modalBtn} size="middle" onClick={handleStart}>
+              Active Strategy
+            </Button>}
             <Button schema="danger" className={styles.modalBtn} size="middle" onClick={handleRemove}>
               Delete
             </Button>
@@ -414,7 +450,7 @@ const StrategyModal: React.FC<{
                         onChange={setExpression}
                       />
                       <Input
-                        title="Price ($ per FT)"
+                        title="Price (USD)"
                         type="number"
                         value={price}
                         onChange={(val) => setPrice(val ? parseFloat(val) : 0)}

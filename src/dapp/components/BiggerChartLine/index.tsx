@@ -78,10 +78,11 @@ const getOptions = (history: TWaverHistory[], activities: TWaverActivity[]) => {
               itemStyle: {
                 color: isSale ? "#c05858" : "#58c059",
               },
-              // label: {
-              //   formatter: name,
-              //   position: 'top'
-              // },
+              label: {
+                // formatter: name,
+                // position: 'top',
+                color: "#fff",
+              },
             };
           }),
         },
