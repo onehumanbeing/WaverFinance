@@ -293,7 +293,7 @@ export const removeStrategyByWallet = (clientContractId: string, wallet: WalletC
       functionCalls: [{
         contractId: clientContractId,
         methodName: EQuanClientChangeMethods.remove_strategy,
-        args: { pool_id: strategyId },
+        args: { id: strategyId },
         gas: new BN(GAS_FEE[300]),
       }],
     },

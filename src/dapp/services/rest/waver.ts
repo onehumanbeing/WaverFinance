@@ -54,6 +54,16 @@ export type TWaverHistory = {
   updated: string,
 }
 
+export type TGetTokensData = {
+  list: {
+      contract_id: AccountId,
+      ft_amount: number,
+      price: number,
+      token_amount: number,
+    }[],
+  total_token_amount: number,
+}
+
 export type TWaverActivity = {
   amount_in: FtAmountString
   amount_in_contract: AccountId,
@@ -108,6 +118,12 @@ const waverApi = {
   },
   getTokenPriceHistory (token_id: string): Promise<TWaverResList<TWaverHistory>> {
     return requestWaver(`/history_token_price?account_id=${token_id}`, {
+      method: 'GET',
+    }); 
+  },
+  // https://waver.finance/api/user/tokens?account_id=waver.testnet
+  getTokens (account_id: string): Promise<TWaverRes<TGetTokensData>> {
+    return requestWaver(`/user/tokens?account_id=${account_id}`, {
       method: 'GET',
     }); 
   },
