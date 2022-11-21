@@ -4,7 +4,7 @@ import TokenIcon from "../TokenIcon";
 
 import styles from "./index.module.scss";
 
-const getName = (contractId: string) => {
+const getName = (contractId?: string) => {
   if (contractId === "wrap.testnet") {
     return "wNear"
   }
@@ -14,6 +14,7 @@ const getName = (contractId: string) => {
   if (contractId === "usdc.fakes.testnet") {
     return "USDC"
   }
+  return contractId?.slice(0, 6) ?? "Near";
 }
 
 const TokenInfo: React.FC<{
