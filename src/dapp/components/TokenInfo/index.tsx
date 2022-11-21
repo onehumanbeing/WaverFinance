@@ -28,7 +28,7 @@ const TokenInfo: React.FC<{
       <TokenIcon contractId={contractId} />
       {(showName || showAddress) && (<div className={styles.tokenInfo__info}>
         {showName && (
-          <div className={styles.tokenInfo__info__name}>NEAR</div>
+          <div className={styles.tokenInfo__info__name}>{getName(contractId)}</div>
         )}
         <div className={styles.tokenInfo__info__address}>
           {showAddress && (
