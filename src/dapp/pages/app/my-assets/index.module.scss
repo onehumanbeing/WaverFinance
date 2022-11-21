@@ -5,6 +5,7 @@
   flex-direction: column;
   position: relative;
   gap: $card-gap;
+  min-height: 36vh;
 
   .contractInfo {
     width: 100%;

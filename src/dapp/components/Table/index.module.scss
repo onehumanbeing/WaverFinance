@@ -1,4 +1,6 @@
 .table {
+  position: relative;
+
   .table__header {
     text-align: left;
     height: 4em;
@@ -16,4 +18,27 @@
   .clickable {
     cursor: pointer;
   }
+}
+
+.table__empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 8em;
+
+  .table__empty__text {
+    font-size: 1.5em;
+    font-weight: 600;
+    opacity: 0.6;
+  }
+}
+
+.table__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 8em;
+  opacity: 0.6;
 }

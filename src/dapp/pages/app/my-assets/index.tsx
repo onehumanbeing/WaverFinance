@@ -103,7 +103,7 @@ const MyAssetsPage: NextPage = () => {
   }, [nearUser.address])
 
   const { data: statistic } = useWaverStatistic();
-  const { data: tokensInfo } = useClientTokens();
+  const { data: tokensInfo, loading: tokensLoading } = useClientTokens();
   const { data: nearInfo } = useAccountNearStatus(contractId!);
   const { withdrawNear } = useWithdrawNear();
 
@@ -197,7 +197,7 @@ const MyAssetsPage: NextPage = () => {
                 },
                 { 
                   title: "Gas Burnt (NEAR)", 
-                  content: total_gas?.toFixed(5) ?? "-",
+                  content: total_gas ? total_gas?.toFixed(5) : "-",
                 },
               ]}
             />
@@ -313,12 +313,13 @@ const MyAssetsPage: NextPage = () => {
                   ...token,
                   key: token.contract_id,
                 })) ?? []}
+                loading={tokensLoading}
               />
             </Card>
           </div>
         </div>
         <Card className={styles.recentActivityCard} title="Recent Activity">
-          {activities && <Table
+          {<Table
             className={styles.activityTable}
             columns={[
               {
@@ -423,10 +424,11 @@ const MyAssetsPage: NextPage = () => {
                 )
               },
             ]}
-            dataSource={activities}
+            dataSource={activities ?? []}
             onClickRow={(record: TWaverActivity) => {
               window.open(`https://explorer.testnet.near.org/transactions/${record.transaction_id}`, '_blank');
             }}
+            loading={!activities}
           />}
         </Card>
       </div>

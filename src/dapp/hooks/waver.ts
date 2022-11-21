@@ -5,6 +5,7 @@ import waverApi, { TGetTokensData, TWaverActivity, TWaverStatistic } from "../se
 
 export const useWaverApiResultWithClientId = <TData> (fetchData: (contractId: string) => Promise<TData>) => {
   const [data, setData] = useState<TData>();
+  const [loading, setLoading] = useState(false);
   const { contractId } = useClientContractId();
 
   useEffect(() => {
@@ -12,15 +13,18 @@ export const useWaverApiResultWithClientId = <TData> (fetchData: (contractId: st
       return;
     }
 
+    setLoading(true);
+
     const fetch = async () => {
       const res = await fetchData(contractId);
       setData(res);
+      setLoading(false);
     }
 
     fetch();
   }, [contractId, fetchData]);
 
-  return { data };
+  return { data, loading };
 }
 
 export const useAccountNearStatus = (accountId: string) => {

@@ -1,4 +1,13 @@
 
+const sliceDigitalStr = (digital: string, position: number) => {
+  const precision = 3;
+  const headPart = digital.slice(0, digital.length - position);
+  const decimalPart = digital.slice(digital.length - position, digital.length - position + Math.max(precision - headPart.length, 0));
+  if(decimalPart.length === 0) {
+    return headPart;
+  }
+  return `${headPart}.${decimalPart}`;
+} 
 
 /** transform 12345 to 12k */
 export const transIntegerWithUnit = (digital: string) => {
@@ -6,23 +15,23 @@ export const transIntegerWithUnit = (digital: string) => {
   if (digitalLen <= 3) {
     return digital;
   } else if (digitalLen <= 6) {
-    return `${digital.slice(0, digitalLen - 3)}K`;
+    return `${sliceDigitalStr(digital, 3)}K`;
   } else if (digitalLen <= 9) {
-    return `${digital.slice(0, digitalLen - 6)}M`;
+    return `${sliceDigitalStr(digital, 6)}M`;
   } else if (digitalLen <= 12) {
-    return `${digital.slice(0, digitalLen - 9)}B`;
+    return `${sliceDigitalStr(digital, 9)}B`;
   } else if (digitalLen <= 15) {
-    return `${digital.slice(0, digitalLen - 12)}T`;
+    return `${sliceDigitalStr(digital, 12)}T`;
   } else if (digitalLen <= 18) {
-    return `${digital.slice(0, digitalLen - 15)}P`;
+    return `${sliceDigitalStr(digital, 15)}P`;
   } else if (digitalLen <= 21) {
-    return `${digital.slice(0, digitalLen - 18)}E`;
+    return `${sliceDigitalStr(digital, 18)}E`;
   } else if (digitalLen <= 24) {
-    return `${digital.slice(0, digitalLen - 21)}Z`;
+    return `${sliceDigitalStr(digital, 21)}Z`;
   } else if (digitalLen <= 27) {
-    return `${digital.slice(0, digitalLen - 24)}Y`;
+    return `${sliceDigitalStr(digital, 24)}Y`;
   } else {
-    return `${digital.slice(0, digitalLen - 27)}B`;
+    return `${sliceDigitalStr(digital, 27)}B`;
   }
 }
 
