@@ -1,1 +1,1 @@
-near deploy --wasmFile out/main.wasm  --accountId $CONTRACT
+near deploy --wasmFile out/main.wasm  --accountId ft.waver.testnet

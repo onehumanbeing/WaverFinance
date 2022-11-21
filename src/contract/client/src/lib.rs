@@ -130,11 +130,11 @@ impl Contract {
             env::panic_str("Trading failed: Strategy is not active");
         }
         // check amount
-        if strategy.stype == BUY || strategy.stype == SALE {
-            if amount != strategy.amount.unwrap() {
-                env::panic_str("Trading failed: Amount error when buying");
-            }
-        }
+        // if strategy.stype == BUY || strategy.stype == SALE {
+        //     if amount != strategy.amount.unwrap() {
+        //         env::panic_str("Trading failed: Amount error when buying");
+        //     }
+        // }
         // if strategy.stype == GRID {
         // }
         // run oracle request
