@@ -14,6 +14,12 @@ We provide secure, transparent, intelligent, and low-cost quantitative trading s
 
 * src/query/loop.py: Waver oracle request process
 
+# Contracts
+
+* client contract example [fundsaresafu.ft.waver.testnet](https://explorer.testnet.near.org/accounts/fundsaresafu.ft.waver.testnet)
+
+* meta contract example [ft.waver.testnet](https://explorer.testnet.near.org/accounts/ft.waver.testnet)
+
 # Transactions Examples
 
 Oracle request failed, slippage error:

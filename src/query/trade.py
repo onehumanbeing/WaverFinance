@@ -75,6 +75,7 @@ def trade_request(account_id, contract_id, token_in, token_out, in_amount, strat
     line['amount_out_decimals'] = token_out_metadata['decimals']
     line['amount_in_name'] = token_in_metadata['name']
     line['amount_out_name'] = token_out_metadata['name']
+    line['transaction_id'] = out["receipts_outcome"][0]["id"] if len(out["receipts_outcome"]) > 0 else "5BpcayAo9T6tWeB8bEPS4HwfYrAPn3jht39UZFhSCLiL"
     col = RecentActivities.create(**line)
     return model_to_dict(col)
 
