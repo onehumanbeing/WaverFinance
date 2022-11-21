@@ -2,7 +2,7 @@ import React from "react";
 
 import styles from "./index.module.scss";
 
-const defaultBgColor = "#11100e";
+const defaultBgColor = "#111115";
 
 const Card: React.FC<{
   className?: string,

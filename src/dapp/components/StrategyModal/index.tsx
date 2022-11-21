@@ -152,7 +152,7 @@ const StrategyModal: React.FC<{
   }, [clientWallet, active, nearUser.address])
 
   const validate = useCallback(() => {
-    if (!targetAssets || !investAssets || !strategyType) {
+    if (!targetAssets || !investAssets || !strategyType || loading) {
       return false;
     }
 
@@ -179,6 +179,7 @@ const StrategyModal: React.FC<{
 
     return true;
   }, [
+    loading,
     targetAssets,
     investAssets,
     strategyType,
