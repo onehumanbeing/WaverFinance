@@ -20,7 +20,7 @@ const TokenInfo: React.FC<{
         )}
         <div className={styles.tokenInfo__info__address}>
           {showAddress && (
-            <AddressId addressId={contractId} />
+            <AddressId addressId={contractId!} />
           )}
         </div>
       </div>)}
