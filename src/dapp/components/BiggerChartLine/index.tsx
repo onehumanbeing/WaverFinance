@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import ReactECharts from "echarts-for-react";
 
+import DemoMode from "../DemoMode";
+
 import styles from "./index.module.scss";
 import waverApi, {
   TWaverHistory,
@@ -188,6 +190,7 @@ const BiggerChartLine: React.FC<{
 
   return (
     <div className={`${className} ${styles.biggerChartLine__container}`}>
+      { demo && <DemoMode className={styles.demo} /> }
       {options && (
         <ReactECharts
           style={{

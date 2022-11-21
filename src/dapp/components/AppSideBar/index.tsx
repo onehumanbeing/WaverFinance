@@ -53,6 +53,7 @@ const AppSideBar: React.FC = () => {
         </div>
         <div className={styles.chartGroup}>
           <CardChartLine 
+            demo
             title="Total Amount" 
             data={[
               { name: "JUL", value: 80 },
@@ -64,6 +65,7 @@ const AppSideBar: React.FC = () => {
             ]}
           />
           <CardChartLine 
+            demo
             title="Daily Active Trading" 
             data={[
               { name: "JUL", value: 80 },
@@ -75,6 +77,7 @@ const AppSideBar: React.FC = () => {
             ]}
           />
           <CardChartLine 
+            demo
             title="Daily Gas Usage" 
             data={[
               { name: "JUL", value: 80 },

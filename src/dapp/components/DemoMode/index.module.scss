@@ -1,0 +1,41 @@
+.demoMode {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events:none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 800;
+
+  .demoMode__overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(128, 128, 128, 0.05);
+    z-index: 1000;
+  }
+
+  .demoMode__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 2000;
+
+    .demoMode__title {
+      opacity: 0.8;
+      font-size: 1.2em;
+      font-weight: 800;
+      gap: 0.5em;
+    }
+    
+    .demoMode__description {
+      opacity: 0.6;
+      font-size: 0.4em;
+      font-weight: 200;
+      gap: 0.5em;
+      text-align: center;
+    }
+  }
+}
