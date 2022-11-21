@@ -1,34 +1,55 @@
 import React from "react";
-import {
-  Chart as ChartJS,
-  LineElement,
-  PointElement,
-  LinearScale,
-  Title,
-  CategoryScale,
-  Tooltip,
-  
-} from "chart.js";
-import { Line } from "react-chartjs-2";
+import ReactECharts from "echarts-for-react";
 
 import Card from "../../components/Card";
 
 import styles from "./index.module.scss";
 import ErrorBoundary from "../ErrorBoundary";
 
-ChartJS.register(
-  LineElement, 
-  PointElement, 
-  LinearScale, 
-  Title, 
-  CategoryScale,
-  Tooltip,
-);
-
 interface IChartData {
   name: string;
   value: number;
 }
+
+
+const getOptions = (data: IChartData[]) => {
+  return {
+    tooltip: {
+      trigger: "axis",
+    },
+    xAxis: {
+      type: "category",
+    },
+    yAxis: {
+      type: "value",
+      axisLabel: {
+        formatter: "{value}",
+      },
+      scale: true,
+      splitLine: { show: false },
+    },
+    grid: {
+      x: 30,
+      y: 10,
+      x2: 10,
+      y2: 20,
+    },
+    series: [
+      {
+        name: "Price",
+        type: "line",
+        smooth: true,
+        itemStyle: {
+          color: "#e50e0c",
+        },
+        data: data.map(({name, value}) => [name, value]),
+        lineStyle: {
+          width: 2,
+        },
+      },
+    ],
+  };
+};
 
 const CardChartLine: React.FC<{
   className?: string;
@@ -43,33 +64,12 @@ const CardChartLine: React.FC<{
       <div className={styles.cardChartLine__title}>{title}</div>
       <div className={styles.cardChartLine__chart}>
         <ErrorBoundary>
-          <Line
-            data={{
-              labels: data.map((item) => item.name),
-              datasets: [
-                {
-                  data: data.map((item) => item.value),
-                  borderWidth: 2.5,
-                  borderColor: '#e50e0c',
-                  backgroundColor: '#e50e0c',
-                  // cubicInterpolationMode: 'monotone',
-                  tension: 0.4,
-                  pointStyle: 'circle',
-                  pointRadius: 2.5,
-                  pointHoverRadius: 5,
-                },
-              ],
+
+          <ReactECharts
+            style={{
+              height: "150px",
             }}
-            options={{
-              responsive: true,
-              plugins: {
-                tooltip: {}
-              },
-              interaction: {
-                intersect: false,
-              },
-              
-            }}
+            option={getOptions(data)}
           />
         </ErrorBoundary>
       </div>
