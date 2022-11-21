@@ -109,10 +109,10 @@ def get_history_token_price(contract_id):
     return list(map(lambda col: model_to_dict(col), query))
 
 def get_active_trading(contract_id):
-    return AccountStrategies.select().where(AccountStrategies.stype != 3).count()
+    return AccountStrategies.select().where(AccountStrategies.stype != 3, AccountStrategies.status == 2).count()
 
 def get_active_strategies(contract_id):
-    return AccountStrategies.select().where(AccountStrategies.stype == 3).count()
+    return AccountStrategies.select().where(AccountStrategies.stype == 3, AccountStrategies.status == 2).count()
 
 def get_gas_burnt(contract_id):
     query = RecentActivities.select().where(RecentActivities.contract_id == contract_id)
