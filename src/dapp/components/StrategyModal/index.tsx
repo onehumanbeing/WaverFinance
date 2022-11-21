@@ -24,8 +24,8 @@ import styles from "./index.module.scss";
 const config = getNearConfig();
 
 const strategyTypeOptions = [
-  { key: "1", value: "Buy" },
   { key: "2", value: "Sale" },
+  { key: "1", value: "Buy" },
   { key: "3", value: "Grid Trading" },
 ];
 const targetAssetsOptions = Object.entries(config.supportTargetFt).map(
@@ -42,7 +42,7 @@ const expressionOptions = [
 
 const targetAssetsDefault = targetAssetsOptions[0]?.key;
 const investAssetsDefault = investAssetsOptions[0]?.key;
-const strategyTypeDefault = "1";
+const strategyTypeDefault = "2";
 
 // Buy / Sell Default
 const expressionDefault = "1";
@@ -475,13 +475,13 @@ const StrategyModal: React.FC<{
                   strategyType === "3" && (
                     <>
                       <Input
-                        title="Grid Interval ($)"
+                        title="Grid Interval (USD fluctuation)"
                         type="number"
                         value={gridInterval}
                         onChange={(val) => setGridInterval(val ? parseFloat(val) : 0)}
                       />
                       <Input
-                        title="Grid Size (Single Trade Amount)"
+                        title="Grid Size (USD per trading)"
                         type="number"
                         value={gridSize}
                         onChange={(val) => setGridSize(val ? parseFloat(val) : 0)}

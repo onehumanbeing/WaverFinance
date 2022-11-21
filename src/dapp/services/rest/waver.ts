@@ -83,6 +83,7 @@ export type TWaverActivity = {
   stype: EStrategyType,
   success: boolean,
   tgas: number,
+  transaction_id: string,
   updated: string,
 }
 
@@ -111,7 +112,7 @@ const waverApi = {
       method: 'GET',
     });
   },
-  getStatistics (account_id: string): Promise<TWaverRes<TWaverStatistic>> {
+  getStatistics (account_id: string): Promise<TWaverStatistic> {
     return requestWaver(`/statistic?account_id=${account_id}`, {
       method: 'GET',
     });
@@ -122,7 +123,7 @@ const waverApi = {
     }); 
   },
   // https://waver.finance/api/user/tokens?account_id=waver.testnet
-  getTokens (account_id: string): Promise<TWaverRes<TGetTokensData>> {
+  getTokens (account_id: string): Promise<TGetTokensData> {
     return requestWaver(`/user/tokens?account_id=${account_id}`, {
       method: 'GET',
     }); 

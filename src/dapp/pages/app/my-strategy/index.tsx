@@ -14,6 +14,7 @@ import StrategyModal from "../../../components/StrategyModal";
 import { EStrategyType, EStrategyStatus, getQuanClientStrategy, getQuanClientStrategyList, IStrategyInfo, useClientContractId } from "../../../services/near/quan-client";
 import Head from "next/head";
 import waverApi from "../../../services/rest/waver";
+import { TokenGroup } from "../../../components/TokenGroup";
 
 const CreateBtn: React.FC<{
   children?: React.ReactNode;
@@ -76,7 +77,7 @@ const MyStrategyTable: React.FC<{
               return "Buy";
             }
             if (stype === EStrategyType.SALE) {
-              return "SALE";
+              return "Sale";
             }
             if (stype === EStrategyType.GRID) {
               return "Grid Trading";
@@ -88,10 +89,10 @@ const MyStrategyTable: React.FC<{
           title: "Asset",
           dataIndex: "stype",
           render: (stype: string, { target_ft, invest_ft }) => (
-            <div className={styles.strategyTokens}>
-              <TokenInfo className={styles.strategyTokens__target_ft} contractId={target_ft} />
-              <TokenInfo className={styles.strategyTokens__invest_ft} contractId={invest_ft} />
-            </div>
+            <TokenGroup
+              leftFt={target_ft}
+              rightFt={invest_ft}
+            />
           )
         },
         {

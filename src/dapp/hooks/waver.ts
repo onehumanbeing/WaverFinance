@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { getAccountNearBalance } from "../services/near/near";
 import { useClientContractId } from "../services/near/quan-client";
 import waverApi, { TGetTokensData, TWaverActivity, TWaverStatistic } from "../services/rest/waver";
 
@@ -22,18 +23,38 @@ export const useWaverApiResultWithClientId = <TData> (fetchData: (contractId: st
   return { data };
 }
 
+export const useAccountNearStatus = (accountId: string) => {
+  const [data, setData] = useState<any>();
+
+  useEffect(() => {
+    if (!accountId) {
+      return;
+    }
+
+    const fetch = async () => {
+      const res = await getAccountNearBalance(accountId);
+      console.log("balance", { res })
+      setData(res);
+    }
+
+    fetch();
+  }, [accountId]);
+
+  return { data };
+}
+
 export const useClientTokens = () => {
-  return useWaverApiResultWithClientId<TGetTokensData>(async (contractId) => {
-    const res = await waverApi.getTokens(contractId);
-    return res.data;
-  })
+  const fetchData = useCallback(async (contractId: string) => {
+    return await waverApi.getTokens(contractId);
+  }, []);
+  return useWaverApiResultWithClientId<TGetTokensData>(fetchData)
 }
 
 export const useWaverStatistic = () => {
-  return useWaverApiResultWithClientId<TWaverStatistic>(async (contractId) => {
-    const res = await waverApi.getStatistics(contractId);
-    return res.data;
-  })
+  const fetchData = useCallback(async (contractId: string) => {
+    return await waverApi.getStatistics(contractId);
+  }, []);
+  return useWaverApiResultWithClientId<TWaverStatistic>(fetchData)
 }
 
 export const useHistoryActivities = () => {

@@ -38,7 +38,7 @@ export default function TopNavbar() {
                 </Link>	
 						</li>
             <li>
-                <a>How it work</a>	
+                <a target="_blank" href="https://github.com/onehumanbeing/WaverFinance/blob/master/README.md" rel="noreferrer">How it work</a>	
 						</li>
 						<li>
                 <a>Whitepaper</a>					
@@ -49,11 +49,11 @@ export default function TopNavbar() {
 					</ul>
           <div className={styles.rightPart}>
             <ul  className={`${styles.ulWrapper} ${styles.active}`}>
-              <li>
+              {/* <li>
                   <a><Image src={Discord} alt="discord" width={22} height={18} /></a>						
-              </li>
+              </li> */}
               <li>
-                  <a><Image src={Twitter} alt="twitter" width={22} height={18} /></a>						
+                  <a title="Twitter" href="https://twitter.com/WaverFinance"><Image src={Twitter} alt="twitter" width={22} height={18} /></a>						
               </li>
             </ul>
             <UserInfo className={styles.userInfo} hideTitle />

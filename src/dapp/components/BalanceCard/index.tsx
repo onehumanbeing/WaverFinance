@@ -35,7 +35,7 @@ const BalanceCardUI: React.FC<{
         </div>
       </div>
       <div className={styles.balanceCard__action}>
-        <a href={buyUrl}>
+        <a href={buyUrl} target="_blank" rel="noreferrer">
           <Button type="minimal" schema="white">Buy Now</Button>
         </a>
       </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import { useClientTokens } from "../../hooks/waver";
 import BalanceCard from "../BalanceCard";
 import CardChartLine from "../CardChartLine";
 import NotificationBtn from "../NoticationBtn";
@@ -12,7 +13,7 @@ const PanelInfoWithTotal: React.FC<{
   className?: string;
   style?: React.CSSProperties;
 }> = ({ className, style }) => {
-  const [totalInvest, setTotalInvest] = React.useState<number>();
+  const { data: tokenInfo } = useClientTokens();
 
   return (
     <PanelInfo
@@ -21,15 +22,15 @@ const PanelInfoWithTotal: React.FC<{
       elements={[
         {
           title: "Total Invest",
-          content: <TrendDigital digital={totalInvest} mode="brief" prefix="$" />,
+          content: <TrendDigital digital={tokenInfo?.total_token_amount} mode="brief" prefix="$" />,
         },
         {
           title: "Total Earning",
-          content: <TrendDigital digital={totalInvest && (totalInvest * 0.2)} mode="brief" prefix="$" trend="up" />,
+          content: <TrendDigital digital={tokenInfo?.total_token_amount && (tokenInfo.total_token_amount * 0.2)} mode="brief" prefix="$" trend="up" />,
         },
         {
           title: "Total Assets",
-          content: "4",
+          content: tokenInfo?.list.length ?? "-",
         },
       ]}
     />
@@ -40,7 +41,8 @@ const AppSideBar: React.FC = () => {
   return (
     <div className={styles.appSideBar}>
       <div className={styles.appSideBar__topBar}>
-        <NotificationBtn number={12} />
+        {/* <NotificationBtn number={12} /> */}
+        <div />
         <UserInfo />
       </div>
       <div className={styles.analysisReport}>

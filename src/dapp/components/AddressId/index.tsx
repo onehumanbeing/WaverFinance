@@ -6,10 +6,15 @@ const AddressId: React.FC<{
   addressId: string,
   copyable?: boolean,
   className?: string,
-}> = ({ addressId, copyable, className }) => {
+  toExplorer?: boolean,
+}> = ({ addressId, copyable, className, toExplorer }) => {
+  const goToExplorer = () => {
+    window.open(`https://explorer.testnet.near.org/accounts/${addressId}`, "_blank");
+  }
+
   return (
     <div className={`${styles.addressId} ${className ?? ""}`}>
-      <div className={`${styles.addressContent} addressId__content`}>
+      <div className={`${styles.addressContent} addressId__content ${toExplorer && styles.clickable}`} onClick={toExplorer ? goToExplorer : undefined}>
         {addressId}
       </div>
       {copyable && (

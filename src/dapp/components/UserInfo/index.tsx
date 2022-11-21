@@ -43,7 +43,7 @@ const UserInfo: React.FC<{
   }
 
   if (!nearUser || !nearUser.isConnected) {
-    return <Button type="minimal" onClick={login}>Connect Wallet</Button>;
+    return <Button className={styles.connBtn} type="minimal" onClick={login}>Connect Wallet</Button>;
   }
 
   const logout = async () => {

@@ -27,6 +27,8 @@ export enum EQuanClientChangeMethods {
   create_strategy = "create_strategy",
   update_strategy = "update_strategy",
   remove_strategy = "remove_strategy",
+  withdraw_near = "withdraw_near",
+  withdraw = "withdraw",
 }
 
 export type IStrategyInfo = {
@@ -298,6 +300,154 @@ export const removeStrategyByWallet = (clientContractId: string, wallet: WalletC
       }],
     },
   ])
+}
+
+export const withdrawNear = (clientContractId: string, wallet: WalletConnection) =>  async (amount: string) => {
+  const near = wallet._near;
+  const helper = new NearHelper({ near, wallet });
+
+  if(!wallet.isSignedIn()) {
+    alert("You need to sign in first");
+    wallet.requestSignIn({
+      contractId: clientContractId,
+    })
+    return;
+  }
+
+  return await helper.executeMultipleTransactions([
+    {
+      receiverId: clientContractId,
+      functionCalls: [{
+        contractId: clientContractId,
+        methodName: EQuanClientChangeMethods.withdraw_near,
+        args: { amount },
+        gas: new BN(GAS_FEE[300]),
+      }],
+    },
+  ])
+}
+
+export const useWithdrawNear = () => {
+  const { contractId } = useClientContractId();
+  const wallet = useQuanClientWallet();
+
+  if (!contractId || !wallet) {
+    return {};
+  }
+
+  return {
+    withdrawNear: withdrawNear(contractId, wallet)
+  };
+}
+
+// export const withdraw = (clientContractId: string, wallet: WalletConnection) =>  async (ftContractId: string, amount: string) => {
+//   const near = wallet._near;
+//   const helper = new NearHelper({ near, wallet });
+
+//   if(!wallet.isSignedIn()) {
+//     alert("You need to sign in first");
+//     wallet.requestSignIn({
+//       contractId: clientContractId,
+//     })
+//     return;
+//   }
+
+//   return await helper.executeMultipleTransactions([
+//     {
+//       receiverId: clientContractId,
+//       functionCalls: [
+//         {
+//           contractId: clientContractId,
+//           methodName: EQuanClientChangeMethods.withdraw,
+//           args: { ft_contract: ftContractId ,amount },
+//           gas: new BN(GAS_FEE[300]),
+//         },
+//       ],
+//     },
+//   ])
+// }
+
+export const withdraw = (clientContractId: string, userAddress: string, wallet: WalletConnection) =>  async (ftContractId: string, amount: string) => {
+  const near = wallet._near;
+  const helper = new NearHelper({ near, wallet });
+
+  if(!wallet.isSignedIn()) {
+    alert("You need to sign in first");
+    wallet.requestSignIn({
+      contractId: clientContractId,
+    })
+    return;
+  }
+
+  return await helper.executeMultipleTransactions([
+    {
+      receiverId: ftContractId,
+      functionCalls: [
+        {
+          contractId: ftContractId,
+          methodName: "storage_deposit",
+          args: {
+            account_id: userAddress!,
+            registration_only: true,
+          },
+          gas: new BN(GAS_FEE[300]),
+          attachedDeposit: new BN(STORAGE_DEPOSIT_STR),
+        },
+      ],
+    },
+    {
+      receiverId: clientContractId,
+      functionCalls: [
+        {
+          contractId: clientContractId,
+          methodName: EQuanClientChangeMethods.withdraw,
+          args: { ft_contract: ftContractId ,amount },
+          gas: new BN(GAS_FEE[300]),
+        },
+      ],
+    },
+  ])
+}
+
+// export const storageDeposit = (wallet: WalletConnection) =>  async (ftContractId: string, userAddress: string) => {
+//   const near = wallet._near;
+//   const helper = new NearHelper({ near, wallet });
+
+//   if(!wallet.isSignedIn()) {
+//     alert("You need to sign in first");
+//     wallet.requestSignIn({
+//       contractId: clientContractId,
+//     })
+//     return;
+//   }
+
+//   return await helper.executeMultipleTransactions([
+//     {
+//       receiverId: clientContractId,
+//       functionCalls: [
+//         {
+//           contractId: clientContractId,
+//           methodName: EQuanClientChangeMethods.withdraw,
+//           args: { ft_contract: ftContractId ,amount },
+//           gas: new BN(GAS_FEE[300]),
+//         },
+//       ],
+//     },
+//   ])
+// }
+
+export const useWithdraw = () => {
+  const { contractId } = useClientContractId();
+  const nearUser = useNearUser();
+  const wallet = useQuanClientWallet();
+
+  if (!contractId || !wallet || !nearUser?.address) {
+    return {};
+  }
+
+  return {
+    withdraw: withdraw(contractId, nearUser.address, wallet)
+  };
 }
 
 export const useStrategyInfo = () => {

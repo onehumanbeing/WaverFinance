@@ -13,6 +13,7 @@ const Table: React.FC<{
   }[],
   dataSource: any[],
   rowKey?: string,
+  onClickRow?: (record: any, index: number, key?: string) => void,
   // pagination?: {
   //   total: number,
   //   pageSize: number,
@@ -20,7 +21,7 @@ const Table: React.FC<{
   //   onChange: (page: number, pageSize?: number) => void,
   // },
 }> = ({ 
-  className, columns, dataSource, rowKey 
+  className, columns, dataSource, rowKey, onClickRow
 }) => {
   return (
     <table className={`${styles.table} ${className ?? ""}`}>
@@ -35,9 +36,11 @@ const Table: React.FC<{
       </thead>
       <tbody>
         {dataSource.map((data, index) => (
-          <tr className={styles.table__body__item} key={rowKey ? data[rowKey] : index}>
+          <tr className={`${styles.table__body__item} ${onClickRow && styles.clickable}`} key={rowKey ? data[rowKey] : index} onClick={() => {
+            onClickRow?.(data, index, rowKey && data[rowKey]);
+          }}>
             {columns.map((column, index) => (
-              <td className={styles.table__body__item__column} key={index}>
+              <td className={styles.table__body__item__cell} key={column.key ?? index}>
                 {column.render ? column.render(data[column.dataIndex], data, index) : data[column.dataIndex]}
               </td>
             ))}

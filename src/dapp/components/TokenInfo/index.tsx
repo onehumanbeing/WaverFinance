@@ -7,7 +7,7 @@ import styles from "./index.module.scss";
 const TokenInfo: React.FC<{
   className?: string,
   style?: React.CSSProperties,
-  contractId: string,
+  contractId?: string,
   showName?: boolean,
   showAddress?: boolean,
 }> = ({ className, contractId, showName, showAddress, style }) => {

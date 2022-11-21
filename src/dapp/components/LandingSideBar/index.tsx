@@ -24,7 +24,7 @@ const Sidebar: React.FC<{
               <Link href='/'>Overview</Link>	
           </li>
           <li>
-              <a>How it work</a>
+              <a target="_blank" href="https://github.com/onehumanbeing/WaverFinance/blob/master/README.md" rel="noreferrer">How it work</a>
           </li>
           <li>
               <a>Whitepaper</a>

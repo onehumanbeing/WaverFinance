@@ -2,7 +2,8 @@ import { NextPage } from "next";
 import React, { useEffect } from "react";
 import { RiWalletLine } from "react-icons/ri";
 import { GoSettings } from "react-icons/go";
-import { useNearUser } from "react-near";
+import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
+import { useNearUser, useNear } from "react-near";
 
 import LayoutApp from "../../../components/LayoutApp";
 import Card from "../../../components/Card";
@@ -20,9 +21,12 @@ import styles from "./index.module.scss";
 import { useRouter } from "next/router";
 import { useQuanMainContract, useQuanMainGetContractQuery } from "../../../services/near/quan-main";
 import Head from "next/head";
-import { EStrategyType, useClientContractId } from "../../../services/near/quan-client";
-import { useHistoryActivities } from "../../../hooks/waver";
-import waverApi from "../../../services/rest/waver";
+import { EStrategyType, useClientContractId, useQuanClientWallet, useWithdrawNear, withdraw } from "../../../services/near/quan-client";
+import { useAccountNearStatus as useAccountNearStatus, useClientTokens, useHistoryActivities, useWaverStatistic } from "../../../hooks/waver";
+import waverApi, { TWaverActivity } from "../../../services/rest/waver";
+import { TokenGroup } from "../../../components/TokenGroup";
+import { formatNearAmount, parseNearAmount } from "near-api-js/lib/utils/format";
+import { NearHelper } from "../../../utils/nearHelper";
 
 const BalanceCardPart: React.FC<{
   className: string,
@@ -87,7 +91,9 @@ const BalanceCardPart: React.FC<{
 const MyAssetsPage: NextPage = () => {
 
   const { contractId } = useClientContractId();
+  const near = useNear();
   const nearUser = useNearUser();
+  const wallet = useQuanClientWallet();
   const { activities } = useHistoryActivities();
 
   useEffect(() => {
@@ -96,13 +102,37 @@ const MyAssetsPage: NextPage = () => {
     }
   }, [nearUser.address])
 
-  const withdraw = async () => {
-    const amount = prompt("Please input the amount of NEAR you want to withdraw");
-    if (!amount || parseFloat(amount) <= 0) {
+  const { data: statistic } = useWaverStatistic();
+  const { data: tokensInfo } = useClientTokens();
+  const { data: nearInfo } = useAccountNearStatus(contractId!);
+  const { withdrawNear } = useWithdrawNear();
+
+  const handleWithdrawNear = async () => {
+    const amountStr = prompt("Please input the amount of NEAR you want to withdraw");
+    if (!amountStr) {
+      return;
+    }
+    const amount = parseFloat(amountStr);
+
+    if (!nearInfo?.amount || !contractId || !withdrawNear) {
+      alert("Main account is loading");
+      return;
+    }
+    if (!amount || amount <= 0) {
       alert("Please input valid amount!");
       return;
     }
+    const balance = parseFloat(formatNearAmount(nearInfo?.amount));
+    if (balance <= 0 || amount > balance) {
+      alert("You don't have enough balance!");
+      return;
+    }
+
+    const amountNearStr = parseNearAmount(amount.toString());
+    await withdrawNear(amountNearStr!);
   }
+
+  const total_gas = activities?.reduce((prev, activity) => prev + activity.gas_burnt, 0) ?? 0;
 
   return (
     <LayoutApp>
@@ -124,15 +154,15 @@ const MyAssetsPage: NextPage = () => {
                 className={styles.balancePart}
                 title="Available Balance"
                 icon={<RiWalletLine />}
-                value={<TrendDigital digital={1568.07} prefix="$ " />}
+                value={<TrendDigital digital={tokensInfo?.total_token_amount} prefix="$ " />}
                 extra={<TrendDigital digital={10} suffix="%" trend="up" />}
               />
               <BalanceCardPart
                 className={styles.depositAmountPart}
                 title="Deposit Amount"
                 icon={<img className={styles.icon} src={StorageIcon.src} alt="storage icon" />}
-                value={<TrendDigital digital={5} suffix=" NEAR" />}
-                extra={<Button className={styles.withdrawBtn} type="minimal" schema="white" onClick={withdraw}>Withdraw</Button>}
+                value={<TrendDigital digital={nearInfo?.amount ? formatNearAmount(nearInfo.amount) : "-"} suffix=" Ⓝ" />}
+                extra={<Button className={styles.withdrawBtn} type="minimal" schema="white" onClick={handleWithdrawNear}>Withdraw</Button>}
               />
             </Card>
             <Card title="Smart Contract" className={styles.contractInfoCard}>
@@ -140,6 +170,7 @@ const MyAssetsPage: NextPage = () => {
                 className={styles.contractInfoCard__address} 
                 addressId={contractId ?? ""}
                 copyable
+                toExplorer
               />
               <div className={styles.version}>Version 1.0.0</div>
             </Card>
@@ -150,23 +181,23 @@ const MyAssetsPage: NextPage = () => {
               elements={[
                 { 
                   title: "24h Transactions", 
-                  content: <TrendDigital digital={30000} prefix="$ " />,
+                  content: <TrendDigital digital={statistic?.["24h"] ?? "-"} prefix="$ " />,
                 },
                 { 
                   title: "7d Transactions", 
-                  content: <TrendDigital digital={30000} prefix="$ " />,
+                  content: <TrendDigital digital={statistic?.["7d"] ?? "-"} prefix="$ " />,
                 },
                 { 
                   title: "Active Trading", 
-                  content: 3,
+                  content: statistic?.active_trading ?? "-",
                 },
                 { 
                   title: "Active Strategy", 
-                  content: 4,
+                  content: statistic?.active_strategies ?? "-",
                 },
                 { 
                   title: "Gas Burnt (NEAR)", 
-                  content: 0.01,
+                  content: total_gas?.toFixed(5) ?? "-",
                 },
               ]}
             />
@@ -180,35 +211,108 @@ const MyAssetsPage: NextPage = () => {
                 columns={[
                   {
                     title: "Assets",
-                    dataIndex: "contractId",
+                    dataIndex: "contract_id",
                     render: (contractId: string) => (
                       <TokenInfo contractId={contractId} showName showAddress />
                     )
                   },
                   {
                     title: "Amount",
-                    dataIndex: "amount",
-                    render: (amount: string, { contractId }) => (
+                    dataIndex: "contract_id",
+                    render: (contractId: string, { ft_amount, token_amount }) => (
                       <div className={styles.amount}>
                         <div className={styles.amountBalance}>
-                          <TokenAmount contractId={contractId} amount={amount} />
+                          {/* <TokenAmount contractId={contractId} amount={ft_amount} /> */}
+                          {ft_amount.toFixed(2)}
                         </div>
                         <div className={styles.amountUsd}>
-                          ≈ $<TokenAmount contractId={contractId} amount={amount} usdMode />
+                          ≈ ${
+                            /*<TokenAmount contractId={contractId} amount={token_amount} usdMode />*/
+                            token_amount.toFixed(2)
+                          }
                         </div>
                       </div>
                     )
                   },
                   {
                     title: "Action",
-                    dataIndex: "contractId",
+                    dataIndex: "contract_id",
+                    render: (ftContractId: string, { ft_amount, decimals }) => {
+                      const handleWithdrawFt = async () => {
+
+                        if (!nearInfo?.amount || !contractId || !withdrawNear || !nearUser?.address || !near || !wallet) {
+                          alert("Main account is loading");
+                          return;
+                        }
+
+                        // check if deposit
+                        // const helper = new NearHelper({ near, wallet });
+                        // // const deposited = await helper.nearViewFunction({
+                        // //   methodName: 'ft_balance_of',
+                        // //   contractName: ftContractId,
+                        // //   args: {
+                        // //     account_id: nearUser.address,
+                        // //   },
+                        // // })
+                        // // const hasDeposit = deposited && deposited.total === '0';
+                        // // if (!hasDeposit) {
+                        // //   alert(`You need to deposit "${ftContractId}" first!`)
+                        // //   return await helper.executeMultipleTransactions([
+                        // //     {
+                        // //       receiverId: ftContractId,
+                        // //       functionCalls: [
+                        // //         {
+                        // //           contractId: ftContractId,
+                        // //           methodName: "storage_deposit",
+                        // //           args: {
+                        // //             account_id: clientContractId!,
+                        // //             registration_only: true,
+                        // //           },
+                        // //           gas: new BN(GAS_FEE[300]),
+                        // //           attachedDeposit: new BN(STORAGE_DEPOSIT_STR),
+                        // //         },
+                        // //       ],
+                        // //     },
+                        // //   ])
+                        // // }
+
+                        const amountStr = prompt("Please input the amount of NEAR you want to withdraw");
+                        if (!amountStr) {
+                          return;
+                        }
+                        const amount = parseFloat(amountStr);
+
+                        if (!amount || amount <= 0) {
+                          alert("Please input valid amount!");
+                          return;
+                        }
+                        const balance = ft_amount;
+                        if (balance <= 0 || amount > balance) {
+                          alert("You don't have enough balance!");
+                          return;
+                        }
+                        
+                        const amountNearStr = Math.floor(amount * (10 ** decimals)).toLocaleString('fullwide', {useGrouping:false});
+                        await withdraw(contractId, nearUser.address, wallet!)(ftContractId, amountNearStr!);
+                      }
+
+                      return (
+                        <div className={styles.tokensTable__action}>
+                          <Button type="pure" onClick={() => alert(`Please transfer to address '${contractId}' to add the token you want!`)}>
+                            Add
+                          </Button>
+                          <Button type="pure" onClick={handleWithdrawFt}>
+                            Withdraw
+                          </Button>
+                        </div>
+                      )
+                    }
                   },
                 ]}
-                dataSource={[
-                  { contractId: "near", amount: "10000" },
-                  { contractId: "near", amount: "10000" },
-                  { contractId: "near", amount: "10000" },
-                ]}
+                dataSource={tokensInfo?.list.map(token => ({
+                  ...token,
+                  key: token.contract_id,
+                })) ?? []}
               />
             </Card>
           </div>
@@ -219,10 +323,32 @@ const MyAssetsPage: NextPage = () => {
             columns={[
               {
                 title: "Assets",
-                dataIndex: "contract_id",
-                render: (contractId: string) => (
-                  <TokenInfo contractId={contractId} showName />
+                dataIndex: "",
+                render: (_: string, { amount_in_contract, amount_out_contract }: TWaverActivity) => (
+                  <TokenGroup
+                    leftFt={amount_in_contract}
+                    rightFt={amount_out_contract}
+                  />
+                  // <TokenInfo contractId={contractId} showName />
                 )
+              },
+              {
+                title: "Status",
+                dataIndex: "success",
+                render: (success: boolean) => {
+                  const getMsg = () => {
+                    if (success) {
+                      return <AiOutlineCheckCircle />;
+                    } else {
+                      return <AiOutlineCloseCircle />;
+                    }
+                  }
+                  return (
+                    <div className={styles.activityTable__status}>
+                      {getMsg()}
+                    </div>
+                  )
+                }
               },
               {
                 title: "Action",
@@ -249,7 +375,7 @@ const MyAssetsPage: NextPage = () => {
                 }
               },
               {
-                title: "Type",
+                title: "Origin",
                 dataIndex: "id",
                 render: (id: number) => (
                   <div className={styles.activityTable__type}>
@@ -260,18 +386,30 @@ const MyAssetsPage: NextPage = () => {
               {
                 title: "Amount In",
                 dataIndex: "amount_in_contract",
-                render: (contractId: string) => (
+                render: (contractId: string, { amount_in, amount_in_decimals }: TWaverActivity) => (
                   <div className={styles.activityTable__amountIn}>
-                    1000 Near
+                    <TokenAmount 
+                      contractId={contractId} 
+                      amount={amount_in} 
+                      dicimal={amount_in_decimals}
+                      mode="amountStr"
+                      withUnit 
+                    />
                   </div>
                 )
               },
               {
                 title: "Amount Out",
                 dataIndex: "amount_out_contract",
-                render: (amount: string, { contractId }) => (
+                render: (contractId: string, { amount_out, amount_out_decimals }: TWaverActivity) => (
                   <div className={styles.activityTable__amountOut}>
-                    30,000 USDC
+                  <TokenAmount 
+                    contractId={contractId} 
+                    amount={amount_out} 
+                    dicimal={amount_out_decimals}
+                    mode="amountStr"
+                    withUnit 
+                  />
                   </div>
                 )
               },
@@ -286,6 +424,9 @@ const MyAssetsPage: NextPage = () => {
               },
             ]}
             dataSource={activities}
+            onClickRow={(record: TWaverActivity) => {
+              window.open(`https://explorer.testnet.near.org/transactions/${record.transaction_id}`, '_blank');
+            }}
           />}
         </Card>
       </div>

@@ -1,0 +1,20 @@
+.strategyTokens {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: positive;
+
+  .strategyTokens__target_ft, .strategyTokens__invest_ft {
+    box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .strategyTokens__target_ft {
+    z-index: 20;
+  }
+
+  .strategyTokens__invest_ft {
+    position: relative;
+    left: -5px;
+    z-index: 10;
+  }
+}

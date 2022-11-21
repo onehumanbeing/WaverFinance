@@ -87,6 +87,9 @@ const getOptions = (history: TWaverHistory[], activities: TWaverActivity[]) => {
           }),
         },
         markLine: {
+          label: {
+            color: "#fff",
+          },
           data: [{ type: "average", name: "Avg" }],
         },
         lineStyle: {

@@ -142,6 +142,13 @@
     }
   }
 
+  .tokensTable {
+    .tokensTable__action {
+      display: flex;
+      gap: 0em;
+    }
+  }
+
   .recentActivityCard {
     .activityTable {
       width: 100%;

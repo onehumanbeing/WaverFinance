@@ -1,10 +1,24 @@
-import { useNearContract } from "react-near";
+import { providers } from "near-api-js";
 
-// const FT_CONTRACT_NAME = 'mfight-ft.testnet';
+const provider = new providers.JsonRpcProvider(
+  // TODO: suit mainnet
+  "https://archival-rpc.testnet.near.org"
+);
 
-// function useFtContract() {
-//    return useNearContract<FtContract & StorageContract>(FT_CONTRACT_NAME, {
-//       viewMethods: [...FT_METHODS.viewMethods, ...STORAGE_METHODS.viewMethods],
-//       changeMethods: [...FT_METHODS.changeMethods, ...STORAGE_METHODS.changeMethods],
-//    });
-// }
+export async function getAccountNearBalance(accountId: string) {
+  try {
+    const rawResult = await provider.query({
+      request_type: "view_account",
+      account_id: accountId,
+      finality: "final",
+    });
+    return rawResult;
+  } catch (e: any) {
+    if (e.type === "AccountDoesNotExist") {
+      return false;
+    }
+    throw e;
+  }
+}
+
+// accountNearBalance();
