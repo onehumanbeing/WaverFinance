@@ -70,8 +70,17 @@ def calc_total_amount(account_id):
     total_amount = 0.0
     token_list = list()
     for ft in tokens:
-        ft_amount = ft_balance(account_id, ft)
-        if ft_amount == 0:
+        rt = 3
+        try_time = 0
+        ft_amount = None
+        while try_time < rt:
+            try:
+                ft_amount = ft_balance(account_id, ft)
+                break
+            except:
+                try_time += 1
+                continue
+        if ft_amount == 0 or ft_amount is None:
             continue
         price = token_price(ft, update=False, fromDex=False)
         token_amount = price * ft_amount
@@ -80,7 +89,8 @@ def calc_total_amount(account_id):
             "token_amount": token_amount,
             "ft_amount": ft_amount,
             "price": price,
-            "contract_id": ft
+            "contract_id": ft,
+            "decimals": 24 if ft == "wrap.testnet" else 6
         })
     return {
         "total_token_amount": total_amount,

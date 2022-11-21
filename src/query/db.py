@@ -49,7 +49,7 @@ class RecentActivities(Model):
     logs = TextField(default='')
     success = BooleanField(default=True)
     failed_msg = TextField(default='')
-
+    transaction_id = CharField(max_length=100, default='5BpcayAo9T6tWeB8bEPS4HwfYrAPn3jht39UZFhSCLiL')
     updated = TimestampField()
 
     class Meta:
@@ -180,13 +180,21 @@ def remove_account_contract(account_id):
 
 def recent_activity_list(contract_id, strategy_id):
     if strategy_id is None:
-        query = RecentActivities.select().where(RecentActivities.contract_id == contract_id)
+        query = RecentActivities.select().where(RecentActivities.contract_id == contract_id).order_by(RecentActivities.updated.desc())
     else:
-        query = RecentActivities.select().where(RecentActivities.contract_id == contract_id, RecentActivities.index == strategy_id)
+        query = RecentActivities.select().where(RecentActivities.contract_id == contract_id, RecentActivities.index == strategy_id).order_by(RecentActivities.updated.desc())
     return list(map(lambda col: model_to_dict(col), query))
 
 
 if __name__ == "__main__":
+    from playhouse.migrate import *
+    my_db = SqliteDatabase('demo.db')
+    migrator = SqliteMigrator(my_db)
+    transaction_id = CharField(max_length=100, default='5BpcayAo9T6tWeB8bEPS4HwfYrAPn3jht39UZFhSCLiL')
+    migrate(
+        migrator.add_column('recent_activities', 'transaction_id', transaction_id),
+    )
+    exit(0)
     if not os.path.exists(DB_NAME):
         db.connect()
         db.create_tables([AccountContracts, TokenPrice, AccountStrategies, RecentActivities, UserStatistic, HistoryTokenPrice])

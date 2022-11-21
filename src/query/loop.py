@@ -54,7 +54,7 @@ def main(start_time):
                 target_price = strategy.target_price / math.pow(10, 5)
                 if strategy.stype == BUY:
                     token_in = strategy.invest_ft
-                    token_out = strategy.target_ft
+                    token_out = strategy.target_ft # wrap.testnet
                 else:
                     # SALE
                     token_in = strategy.target_ft
@@ -71,7 +71,7 @@ def main(start_time):
                     trade_request(contract_dict[strategy.contract_id], strategy.contract_id, token_in, token_out, token_in_amount, strategy.index, strategy.stype, int(price * math.pow(10, 5)), debug=True)
             elif strategy.stype == GRID:
                 price = token_price(strategy.target_ft, update=True, fromDex=True)
-                last_price = strategy.last_price / math.pow(10, 5)
+                last_price = strategy.lastest_price / math.pow(10, 5)
                 highest = strategy.highest_price / math.pow(10, 5)
                 lowest = strategy.lowest_price / math.pow(10, 5)
                 expired_time = strategy.created + strategy.time_period
