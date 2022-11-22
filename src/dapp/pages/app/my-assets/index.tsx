@@ -425,9 +425,9 @@ const MyAssetsPage: NextPage = () => {
               },
             ]}
             dataSource={activities ?? []}
-            onClickRow={(record: TWaverActivity) => {
-              window.open(`https://explorer.testnet.near.org/transactions/${record.transaction_id}`, '_blank');
-            }}
+            // onClickRow={(record: TWaverActivity) => {
+            //   window.open(`https://explorer.testnet.near.org/transactions/${record.transaction_id}`, '_blank');
+            // }}
             loading={!activities}
           />}
         </Card>
