@@ -5,6 +5,7 @@ import styles from "./index.module.scss";
 import DefaultProfileImg from "../../assets/img/icons/profile.png";
 import { useNearUser } from "react-near";
 import Button from "../Button";
+import Link from "next/link";
 
 const UserInfoUI: React.FC<{
   className?: string;
@@ -18,7 +19,13 @@ const UserInfoUI: React.FC<{
     <div className={`${styles.userCard} ${className}`}>
       <div className={styles.userCard__info}>
         {!hideTitle && <div className={styles.userCard__info__name}>My Account</div>}
-        <div className={`${styles.userCard__info__address} ${hideTitle && styles.addressOnly}`}>{address}</div>
+        <div className={`${styles.userCard__info__address} ${hideTitle && styles.addressOnly}`}>
+          <Link href="/app/my-assets">
+            <a>
+              {address}
+            </a>
+          </Link>
+        </div>
       </div>
       {!hideAvatar && <div className={`${styles.userCard__avatar}`}>
         {logout && <div className={styles.logoutInAvatar} onClick={logout}>

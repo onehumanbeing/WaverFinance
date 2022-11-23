@@ -1,6 +1,7 @@
 import React, {  useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { BsGithub } from "react-icons/bs";
 
 import Sidebar from "../LandingSideBar";
 
@@ -41,10 +42,10 @@ export default function TopNavbar() {
                 <a target="_blank" href="https://github.com/onehumanbeing/WaverFinance/blob/master/README.md" rel="noreferrer">How it work</a>	
 						</li>
 						<li>
-                <a>Whitepaper</a>					
+                <a target="_blank" href="https://github.com/onehumanbeing/WaverFinance/graphs/contributors" rel="noreferrer">Whitepaper</a>					
 						</li>
             <li>
-                <a>Developer</a>						
+                <a target="_blank" href="https://github.com/onehumanbeing/WaverFinance" rel="noreferrer">Developer</a>						
 						</li>
 					</ul>
           <div className={styles.rightPart}>
@@ -53,7 +54,25 @@ export default function TopNavbar() {
                   <a><Image src={Discord} alt="discord" width={22} height={18} /></a>						
               </li> */}
               <li>
-                  <a title="Twitter" href="https://twitter.com/WaverFinance"><Image src={Twitter} alt="twitter" width={22} height={18} /></a>						
+                  <a 
+                    target="_blank" 
+                    rel="noreferrer"
+                    className={styles.githubIcon} 
+                    title="Github" 
+                    href="https://github.com/onehumanbeing/WaverFinance"
+                  >
+                    <BsGithub />
+                  </a>						
+              </li>
+              <li>
+                  <a
+                    target="_blank" 
+                    rel="noreferrer"
+                    title="Twitter" 
+                    href="https://twitter.com/WaverFinance"
+                  >
+                    <Image src={Twitter} alt="twitter" width={22} height={18} />
+                  </a>						
               </li>
             </ul>
             <UserInfo className={styles.userInfo} hideTitle />
