@@ -92,9 +92,9 @@ const Home: NextPage = () => {
             <div className={styles.otherStyle}>
               <div className={styles.zhengfangxing}></div>
               <p>
-                Copy trading is a type of trading in which a trader (Subscriber)
-                mirrors the trades of another trader (Strategist). This allows
-                the follower to
+                {
+                  'Copy trading is a type of trading in which a trader (Subscriber) mirrors the trades of another trader (Strategist). This allows the follower to '
+                }
                 <span>benefit</span>
                 from the knowledge and experience of the strategy provider{' '}
                 <span>
@@ -102,9 +102,10 @@ const Home: NextPage = () => {
                 </span>
               </p>
               <p>
-                In <span>Waver</span>, when you subscribe to a strategist, your
-                account is automatically synced to the strategist's account, and
-                all trades made by the strategist are replicated in the your's.
+                In <span>Waver</span>
+                {
+                  ", when you subscribe to a strategist, your account is automatically synced to the strategist's account, and all trades made by the strategist are replicated in the your's."
+                }
               </p>
               <div className={styles.zuoxiajiao}></div>
             </div>
@@ -128,7 +129,7 @@ const Home: NextPage = () => {
             <div className={styles.content2_content}>
               <div className={styles.left}>
                 <div className={styles.box1}>
-                  <h3>I'm a Beginner</h3>
+                  <h3>{"I'm a Beginner"}</h3>
                   <img
                     src={UsdcImg.src}
                     alt="usdc"
@@ -155,7 +156,7 @@ const Home: NextPage = () => {
               <div className={styles.center}></div>
               <div className={styles.right}>
                 <div className={styles.box1}>
-                  <h3>I'm a Strategist</h3>
+                  <h3>{"I'm a Strategist"}</h3>
                   <img
                     src={NearCoinImg.src}
                     alt="near_coin"
